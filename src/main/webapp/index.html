@@ -1,0 +1,78 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<script>
+function loadDJs(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+function process(djs) {
+	var djlist = document.getElementById("djlist");
+	
+	if (djlist.hasChildNodes()) {
+		djlist.removeChild(djlist.firstChild);
+	}
+	
+	var table = document.createElement("table");
+	djlist.appendChild(table);
+	
+	console.log(djs);
+	for (var dj of djs) {
+		console.log(dj);
+		var tr = document.createElement("tr");
+		var td_id = document.createElement("td");
+		td_id.append(dj.id);
+		var td_nom = document.createElement("td");
+		td_title.append(dj.nom);
+		var td_prenom = document.createElement("td");
+		td_author.append(dj.prenom);
+		tr.appendChild(td_id);
+		tr.appendChild(td_nom);
+		tr.appendChild(td_prenom);
+		table.appendChild(tr);
+	}
+}
+
+function searchByName() {
+	var name = document.getElementById("input_name").value;
+	var url ="/DJs/api/dj-management/djs?name="+name;  
+	loadDJs(url);
+}
+
+function searchWithHistory() {
+    var name = document.getElementById('input_name').value;
+    var url = "/DJs/api/book-management/djs-session?name=" + name;
+    loadDJs(url);
+}
+
+</script>
+<title></title></head>
+<body onload="loadDJs('/DJs/api/dj-management/djs')">
+
+<h1>Liste des DJs</h1>
+
+<div id="djlist"></div>
+	<!-- Champ de texte -->
+	</br>
+    <input type="text" id="input_name">
+
+    <!-- Boutons -->
+    <button onclick="searchByName()">Rechercher</button>
+    </br>
+    <button onclick="searchWithHistory()">Historique</button>
+
+</body>
+</html>
