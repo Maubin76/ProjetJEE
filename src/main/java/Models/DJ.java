@@ -1,9 +1,10 @@
 package Models;
 import java.sql.Date;
+import java.util.UUID;
 
 public class DJ {
     
-    private int id;
+    private UUID id;
     private String nom;
     private String prenom;
     private String nomDeScene;
@@ -11,7 +12,19 @@ public class DJ {
     private String lieuDeResidence;
     private StyleMusical styleMusical;
 
-    public int getId() {
+    public DJ() {}
+    
+    public DJ(String _nom, String _prenom, String _nomDeScene, Date _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
+    	id = UUID.randomUUID(); // Génération de l'id
+    	nom = _nom;
+    	prenom = _prenom;
+    	nomDeScene = _nomDeScene;
+    	dateDeNaissance = _dateDeNaissance;
+    	lieuDeResidence = _lieuDeResidence;
+    	styleMusical = _styleMusical;
+    }
+    
+    public UUID getId() {
     	return id;
     }
     
