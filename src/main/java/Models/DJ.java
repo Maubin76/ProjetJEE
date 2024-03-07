@@ -24,6 +24,16 @@ public class DJ {
     	styleMusical = _styleMusical;
     }
     
+    public DJ(UUID _id, String _nom, String _prenom, String _nomDeScene, Date _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
+    	id = _id;
+    	nom = _nom;
+    	prenom = _prenom;
+    	nomDeScene = _nomDeScene;
+    	dateDeNaissance = _dateDeNaissance;
+    	lieuDeResidence = _lieuDeResidence;
+    	styleMusical = _styleMusical;
+    }
+    
     public UUID getId() {
     	return id;
     }
