@@ -14,10 +14,8 @@ import Models.StyleMusical;
 
 public class DJDAOImpl implements DJDAO {
 
-	@Override
-	public List<DJ> findByAll() {
-		
-		List<DJ> resultList = new ArrayList<DJ>();
+	/*
+	public void insertDJtoDB(DJ dj) {
 		
 		Connection connection = null;
 		try {
@@ -26,6 +24,35 @@ public class DJDAOImpl implements DJDAO {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+	
+		// INSERT INTO `info_captainm_schema`.`DJ` (`id`, `nom`, `prenom`, `nomDeScene`, `dateDeNaissance`, `lieuDeResidence`, `styleMusical`) 
+		// VALUES ('0e30b4a1-1577-4c70-9bcf-092140d888b8', 'Montel', 'Theo', 'Xx_miniZgEg_xX', '2003-10-05', 'zeubi', 'Hard_style');
+		
+	}
+	*/
+	
+	
+	@Override
+	public List<DJ> findByAll() {
+		
+		List<DJ> resultList = new ArrayList<DJ>();
+			
+		Connection connection = null;
+		try {
+			connection = DBConnection.getConnection();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
 		
 		Statement statement = null;
 		try {
@@ -49,10 +76,10 @@ public class DJDAOImpl implements DJDAO {
 				String nom = rs.getString("nom");
 				String nomDeScene = rs.getString("nomDeScene");
 				LocalDate dateDeNaissance = rs.getDate("dateDeNaissance").toLocalDate();
-				String lieuDeNaissance = rs.getString("lieuDeNaissance");
+				String lieuDeResidence = rs.getString("lieuDeResidence");
 				StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
 				
-				DJ dj = new DJ(id, prenom, nom, nomDeScene, dateDeNaissance, lieuDeNaissance, style);
+				DJ dj = new DJ(id, prenom, nom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
 				
 				resultList.add(dj);
 			}
@@ -63,7 +90,5 @@ public class DJDAOImpl implements DJDAO {
 		
 		return resultList;
 	}
-
-	
 	
 }
