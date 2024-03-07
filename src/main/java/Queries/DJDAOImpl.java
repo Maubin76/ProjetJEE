@@ -1,6 +1,8 @@
 package Queries;
 
 import java.sql.Connection;
+import java.sql.Date;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -14,16 +16,26 @@ import Models.StyleMusical;
 
 public class DJDAOImpl implements DJDAO {
 
-	/*
+	@Override
 	public void insertDJtoDB(DJ dj) {
 		
-		Connection connection = null;
+		String id = dj.getId().toString();
+		String nom = dj.getNom();
+		String prenom = dj.getPrenom();
+		String nomDeScene = dj.getNomDeScene();
+		Date dateDeNaissance = Date.valueOf(dj.getDateDeNaissance());
+		String lieuDeResidence = dj.getLieuDeResidence();
+		String styleMusical = dj.getStyleMusical().toString();
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		/* Connection connection = null;
 		try {
 			connection = DBConnection.getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		} */
 		
 		Statement statement = null;
 		try {
@@ -33,26 +45,52 @@ public class DJDAOImpl implements DJDAO {
 			e.printStackTrace();
 		}
 		
-	
-		// INSERT INTO `info_captainm_schema`.`DJ` (`id`, `nom`, `prenom`, `nomDeScene`, `dateDeNaissance`, `lieuDeResidence`, `styleMusical`) 
-		// VALUES ('0e30b4a1-1577-4c70-9bcf-092140d888b8', 'Montel', 'Theo', 'Xx_miniZgEg_xX', '2003-10-05', 'zeubi', 'Hard_style');
+		String sql = "INSERT INTO `info_captainm_schema`.`DJ` "
+					+ "(`id`, `nom`, `prenom`, `nomDeScene`, `dateDeNaissance`, `lieuDeResidence`, `styleMusical`)"
+					+ "VALUES "
+					+ "(?, ?, ?, ?, ?, ?, ?)";
 		
+		try {
+			// Permet d'éviter les injections SQL
+			PreparedStatement preparedStatement = connection.prepareStatement(sql);
+			
+			preparedStatement.setString(1, id);
+			preparedStatement.setString(2, nom);
+			preparedStatement.setString(3, prenom);
+			preparedStatement.setString(4, nomDeScene);
+			preparedStatement.setDate(5, dateDeNaissance);
+			preparedStatement.setString(6, lieuDeResidence);
+			preparedStatement.setString(7, styleMusical);
+			
+			int rowsAffected = preparedStatement.executeUpdate();
+			
+			if(rowsAffected < 0) {
+				System.err.println("Aucune colonne modifiée");
+			}
+			
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
-	*/
+	
 	
 	
 	@Override
 	public List<DJ> findByAll() {
 		
 		List<DJ> resultList = new ArrayList<DJ>();
-			
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		/*
 		Connection connection = null;
 		try {
 			connection = DBConnection.getConnection();
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		} 
+		}
+		*/
 		
 		Statement statement = null;
 		try {
@@ -79,7 +117,7 @@ public class DJDAOImpl implements DJDAO {
 				String lieuDeResidence = rs.getString("lieuDeResidence");
 				StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
 				
-				DJ dj = new DJ(id, prenom, nom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
+				DJ dj = new DJ(id, nom, prenom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
 				
 				resultList.add(dj);
 			}
@@ -91,4 +129,18 @@ public class DJDAOImpl implements DJDAO {
 		return resultList;
 	}
 	
+	
+	public static void main(String[] args) {
+        
+		/*
+		UUID id = UUID.randomUUID();
+		
+		DJ dj = new DJ(id, "Anquetil", "Geoffrey", "GAZDMB", LocalDate.now(), "LH", StyleMusical.Hard_style);
+		
+		DJDAO dao = new DJDAOImpl();
+		dao.insertDJtoDB(dj);
+		List<DJ> liste = dao.findByAll();
+		System.out.println(liste.get(2).getNomDeScene());    }
+		*/
+	}
 }

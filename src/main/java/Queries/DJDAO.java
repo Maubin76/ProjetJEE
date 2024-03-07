@@ -7,6 +7,8 @@ import Models.DJ; // Classe DJ
 public interface DJDAO {
 
 	// Renvoie tous les DJ de la BDD
-	List<DJ> findByAll();
+	public List<DJ> findByAll();
+	// Insère un DJ dans la BDD
+	public void insertDJtoDB(DJ dj);
 	
 }

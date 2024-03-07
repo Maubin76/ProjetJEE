@@ -10,6 +10,12 @@ public class DJDAOMockImpl implements DJDAO {
 	public List<DJ> findByAll() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public void insertDJtoDB(DJ dj) {
+		// TODO Auto-generated method stub
+		
 	}	
 	
 }
