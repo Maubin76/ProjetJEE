@@ -61,7 +61,7 @@ public class DJDAOImpl implements DJDAO {
 			e.printStackTrace();
 		}
 		
-		return null;
+		return resultList;
 	}
 
 	
