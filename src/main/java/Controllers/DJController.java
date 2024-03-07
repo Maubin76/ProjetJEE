@@ -3,7 +3,7 @@ package Controllers;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.MediaType;
 
-@Path("/dj-management")
+@Path("/dj")
 public class DJController {
 
 	@GET 
@@ -11,5 +11,5 @@ public class DJController {
 	@Path("/hello") 
 	public String hello() { 
 		return "Hello World!"; 
-	} 
+	}
 }
