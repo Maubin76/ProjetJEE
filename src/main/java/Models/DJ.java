@@ -1,5 +1,6 @@
 package Models;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.UUID;
 
 public class DJ {
@@ -8,13 +9,13 @@ public class DJ {
     private String nom;
     private String prenom;
     private String nomDeScene;
-    private Date dateDeNaissance;
+    private LocalDate dateDeNaissance;
     private String lieuDeResidence;
     private StyleMusical styleMusical;
 
     public DJ() {}
     
-    public DJ(String _nom, String _prenom, String _nomDeScene, Date _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
+    public DJ(String _nom, String _prenom, String _nomDeScene, LocalDate _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
     	id = UUID.randomUUID(); // Génération de l'id
     	nom = _nom;
     	prenom = _prenom;
@@ -24,7 +25,7 @@ public class DJ {
     	styleMusical = _styleMusical;
     }
     
-    public DJ(UUID _id, String _nom, String _prenom, String _nomDeScene, Date _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
+    public DJ(UUID _id, String _nom, String _prenom, String _nomDeScene, LocalDate _dateDeNaissance, String _lieuDeResidence, StyleMusical _styleMusical) {
     	id = _id;
     	nom = _nom;
     	prenom = _prenom;
@@ -62,11 +63,11 @@ public class DJ {
         this.nomDeScene = nomDeScene;
     }
 
-    public Date getDateDeNaissance() {
+    public LocalDate getDateDeNaissance() {
         return dateDeNaissance;
     }
 
-    public void setDateDeNaissance(Date dateDeNaissance) {
+    public void setDateDeNaissance(LocalDate dateDeNaissance) {
         this.dateDeNaissance = dateDeNaissance;
     }
 
