@@ -64,6 +64,8 @@ public class DJDAOImpl implements DJDAO {
 			
 			int rowsAffected = preparedStatement.executeUpdate();
 			
+			preparedStatement.close();
+			
 			if(rowsAffected < 0) {
 				System.err.println("Aucune colonne modifiée");
 			}
