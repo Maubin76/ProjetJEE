@@ -41,4 +41,15 @@ public class DJDAOMockImpl implements DJDAO {
 		
 	}	
 	
+	public void modifyDJ(DJ dj, String champs, String valeur) {
+		
+	}
+	public void modifyDJ(DJ dj, String champs, Date date) {
+		
+	}
+	
+	public void modifyDJ(DJ dj, String champs, StyleMusical style) {
+		
+	}
+	
 }

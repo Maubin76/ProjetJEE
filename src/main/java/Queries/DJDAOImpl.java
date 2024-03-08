@@ -36,14 +36,6 @@ public class DJDAOImpl implements DJDAO {
 			e.printStackTrace();
 		} */
 		
-		Statement statement = null;
-		try {
-			statement = connection.createStatement();
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-		
 		String sql = "INSERT INTO `info_captainm_schema`.`DJ` "
 					+ "(`id`, `nom`, `prenom`, `nomDeScene`, `dateDeNaissance`, `lieuDeResidence`, `styleMusical`)"
 					+ "VALUES "
@@ -190,8 +182,81 @@ public class DJDAOImpl implements DJDAO {
 	    }
 	}
 
+	@Override
+	public void modifyDJ(DJ dj, String champs, String valeur) {
+	    try (Connection connection = DBManager.getInstance().getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE DJ SET " + champs + " = ? WHERE id = ?")) {
+
+	        preparedStatement.setString(1, valeur);
+	        preparedStatement.setString(2, dj.getId().toString());
+
+	        int rowsUpdated = preparedStatement.executeUpdate();
+	        System.out.println(rowsUpdated + " lignes mises à jour.");
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	
-	public static void main(String[] args) {
+	@Override
+	public void modifyDJ(DJ dj, String champs, Date date) {
+		try (Connection connection = DBManager.getInstance().getConnection();
+		         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE DJ SET " + champs + " = ? WHERE id = ?")) {
+
+		        preparedStatement.setDate(1, date);
+		        preparedStatement.setString(2, dj.getId().toString());
+
+		        int rowsUpdated = preparedStatement.executeUpdate();
+		        System.out.println(rowsUpdated + " lignes mises à jour.");
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	}
+	
+	@Override
+	public void modifyDJ(DJ dj, String champs, StyleMusical style) {
+		try (Connection connection = DBManager.getInstance().getConnection();
+		         PreparedStatement preparedStatement = connection.prepareStatement("UPDATE DJ SET " + champs + " = ? WHERE id = ?")) {
+
+		        preparedStatement.setString(1, style.toString());
+		        preparedStatement.setString(2, dj.getId().toString());
+
+		        int rowsUpdated = preparedStatement.executeUpdate();
+		        System.out.println(rowsUpdated + " lignes mises à jour.");
+		        
+		    } catch (SQLException e) {
+		        e.printStackTrace();
+		    }
+	}
+	
+	
+	
+	public static void main(String[] args) {	
+		DJDAO dao = new DJDAOImpl();
 		
+		afficherDJ();
+	}
+	
+	private static void afficherDJ() {
+		DJDAO dao = new DJDAOImpl();
+		
+		// On affiche tous les noms de scène
+		List<DJ> liste = dao.findByAll();
+		for(int i=0; i<liste.size(); i++) {
+			String id = liste.get(0).getId().toString();
+			String prenom = liste.get(0).getPrenom();
+			String nom = liste.get(0).getNom();
+			String nomDeScene = liste.get(0).getNomDeScene();
+			String dateDeNaissance = liste.get(0).getDateDeNaissance().toString();
+			String lieuDeResidence = liste.get(0).getLieuDeResidence();
+			String style = liste.get(0).getStyleMusical().toString();
+			
+			String djString = (i+1) + " " + id + " " + prenom + " " + nom + " " + 
+					nomDeScene + " " + dateDeNaissance + " " + 
+					lieuDeResidence + " " + style;
+			System.out.println(djString);
+		}
 	}
 }
