@@ -1,0 +1,59 @@
+
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+
+<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<meta charset="UTF-8">
+<script>
+
+function ajoutDJ(){
+	var nom = document.getElementById("nom").value;
+	var prenom = document.getElementById("prenom").value;
+	var dateDeNaissance = document.getElementById("dateDeNaissance").value;
+	var nomDeScene = document.getElementById("nomDeScene").value;
+	var lieuDeResidence = document.getElementById("lieuDeResidence").value;
+	var styleDeMusique = document.getElementById("styleDeMusique").value;
+	var url ="/ProjetJEE/api/dj-management/ajout?nom="+nom+"&prenom="+prenom+"&dateDeNaissance="+dateDeNaissance+"&nomDeScene="+nomDeScene+"&lieuDeResidence="+lieuDeResidence+"&styleDeMusique="+styleDeMusique;
+	console.log(url);
+	fetch(url);
+}
+
+
+</script>
+<title>Ajout de DJs</title>
+</head>
+<body>
+<h1>DJ à ajouter</h1>
+<p>Nom : <input type="text" id="nom"> </p>
+<p>Prénom :<input type="text" id="prenom"> </p>
+<p>Date de naissance (format "yyyy-MM-dd") :<input type="text" id="dateDeNaissance"> </p>
+<p>Nom de scène :<input type="text" id="nomDeScene"> </p>
+<p>Lieu de résidence :<input type="text" id="lieuDeResidence"> </p>
+
+<p>Style de musique :<select id="styleDeMusique" name="styleDeMusique">
+                <option value="1">Electro</option>
+                <option value="2">House</option>
+                <option value="3">Hard style</option>
+                <option value="4">EDM</option>
+              </select> </p>
+
+
+    <!-- Boutons -->
+    <button onclick="ajoutDJ()">Ajouter ce DJ</button>
+</body>
+</html>
