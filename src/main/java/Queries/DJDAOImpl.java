@@ -6,7 +6,6 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -130,19 +129,69 @@ public class DJDAOImpl implements DJDAO {
 		
 		return resultList;
 	}
-	
+
+	@Override
+	public List<DJ> findByNomDeScene(String _nomDeScene) {
+		
+		List<DJ> resultList = new ArrayList<DJ>();
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery("SELECT * FROM DJ WHERE nomDeScene = '" + _nomDeScene + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while(rs.next()) {
+				UUID id = UUID.fromString(rs.getString("id"));
+				String prenom = rs.getString("prenom");
+				String nom = rs.getString("nom");
+				String nomDeScene = rs.getString("nomDeScene");
+				Date dateDeNaissance = rs.getDate("dateDeNaissance");
+				String lieuDeResidence = rs.getString("lieuDeResidence");
+				StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
+				
+				DJ dj = new DJ(id, nom, prenom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
+				
+				resultList.add(dj);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultList;
+	}
+
+	@Override
+	public void deleteFromDB(DJ dj) {
+	    UUID uuid = dj.getId();
+	    String id = uuid.toString();
+
+	    try (Connection connection = DBManager.getInstance().getConnection();
+	         PreparedStatement preparedStatement = connection.prepareStatement("DELETE FROM DJ WHERE id = ?")) {
+
+	        preparedStatement.setString(1, id);
+	        preparedStatement.executeUpdate();
+	        
+	    } catch (SQLException e) {
+	        e.printStackTrace();
+	    }
+	}
+
 	
 	public static void main(String[] args) {
-        
-		/*
-		UUID id = UUID.randomUUID();
 		
-		DJ dj = new DJ(id, "Anquetil", "Geoffrey", "GAZDMB", LocalDate.now(), "LH", StyleMusical.Hard_style);
-		
-		DJDAO dao = new DJDAOImpl();
-		dao.insertDJtoDB(dj);
-		List<DJ> liste = dao.findByAll();
-		System.out.println(liste.get(2).getNomDeScene());    }
-		*/
 	}
 }

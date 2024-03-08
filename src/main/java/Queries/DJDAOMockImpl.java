@@ -25,6 +25,20 @@ public class DJDAOMockImpl implements DJDAO {
 	public void insertDJtoDB(DJ dj) {
 		
 		
+	}
+
+
+	@Override
+	public List<DJ> findByNomDeScene(String nomDeScene) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+
+	@Override
+	public void deleteFromDB(DJ dj) {
+		// TODO Auto-generated method stub
+		
 	}	
 	
 }
