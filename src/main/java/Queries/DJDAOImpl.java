@@ -23,7 +23,7 @@ public class DJDAOImpl implements DJDAO {
 		String nom = dj.getNom();
 		String prenom = dj.getPrenom();
 		String nomDeScene = dj.getNomDeScene();
-		Date dateDeNaissance = Date.valueOf(dj.getDateDeNaissance());
+		Date dateDeNaissance = dj.getDateDeNaissance();
 		String lieuDeResidence = dj.getLieuDeResidence();
 		String styleMusical = dj.getStyleMusical().toString();
 		
@@ -115,7 +115,7 @@ public class DJDAOImpl implements DJDAO {
 				String prenom = rs.getString("prenom");
 				String nom = rs.getString("nom");
 				String nomDeScene = rs.getString("nomDeScene");
-				LocalDate dateDeNaissance = rs.getDate("dateDeNaissance").toLocalDate();
+				Date dateDeNaissance = rs.getDate("dateDeNaissance");
 				String lieuDeResidence = rs.getString("lieuDeResidence");
 				StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
 				
