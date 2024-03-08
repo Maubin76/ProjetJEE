@@ -6,6 +6,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
@@ -95,7 +96,7 @@ public class DJDAOImpl implements DJDAO {
 		
 		ResultSet rs = null;
 		try {
-			rs = statement.executeQuery("SELECT * FROM DJ");
+			rs = statement.executeQuery("SELECT * FROM DJ ORDER BY nomDeScene");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -235,6 +236,27 @@ public class DJDAOImpl implements DJDAO {
 	
 	public static void main(String[] args) {	
 		DJDAO dao = new DJDAOImpl();
+		
+		for(int i=0; i<69; i++) {
+			UUID id = UUID.randomUUID();
+			String nom = "nom"+i;
+			String prenom = "prenom"+i;
+			String nomDeScene = "nomDeScene"+i;
+			Date dateDeNaissance = Date.valueOf(LocalDate.now());
+			String lieuDeResidence = "lieu"+i;
+			StyleMusical style = null;
+			if(i%4 == 0) {
+				style = StyleMusical.Electro;
+			} else if(i%4 == 1) {
+				style = StyleMusical.House;
+			} else if(i%4 == 2) {
+				style = StyleMusical.Hard_style;
+			} else if(i%4 == 3) {
+				style = StyleMusical.EDM;
+			}
+			DJ dj = new DJ(id, nom, prenom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
+			dao.insertDJtoDB(dj);
+		}
 		
 		afficherDJ();
 	}
