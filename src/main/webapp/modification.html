@@ -1,0 +1,106 @@
+
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+
+<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<meta charset="UTF-8">
+<script>
+function loadDJs(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+var nomDeScene;
+function process(djs) {
+	nomDeScene=""
+	if (djs!=null){
+		var djlist = document.getElementById("djlist");
+	
+		if (djlist.hasChildNodes()) {
+			djlist.removeChild(djlist.firstChild);
+		}
+	
+		var table = document.createElement("table");
+		djlist.appendChild(table);
+		var thead = document.createElement("thead");
+		var trHead = document.createElement("tr");
+		trHead.innerHTML = "<th class='column-header'>Prénom</th>" +
+	                   "<th class='column-header'>Nom</th>" +
+	                   "<th class='column-header'>Nom de scène</th>" +
+	                   "<th class='column-header'>Date de naissance</th>" +
+	                   "<th class='column-header'>Lieu de résidence</th>" +
+	                   "<th class='column-header'>Style de musique</th>";
+		thead.appendChild(trHead);
+		table.appendChild(thead);
+		for (var dj of djs) {
+			console.log(dj);
+			var tr = document.createElement("tr");
+			var td_nom = document.createElement("td");
+			td_nom.append(dj.nom);
+			var td_prenom = document.createElement("td");
+			td_prenom.append(dj.prenom);
+			var td_nomDeScene = document.createElement("td");
+			td_nomDeScene.append(dj.nomDeScene);
+			var td_dateDeNaissance = document.createElement("td");
+			td_dateDeNaissance.append(dj.dateDeNaissance);
+			var td_lieuDeResidence = document.createElement("td");
+			td_lieuDeResidence.append(dj.lieuDeResidence);
+			var td_styleMusical = document.createElement("td");
+			td_styleMusical.append(dj.styleMusical);
+			tr.appendChild(td_nom);
+			tr.appendChild(td_prenom);
+			tr.appendChild(td_nomDeScene);
+			tr.appendChild(td_dateDeNaissance);
+			tr.appendChild(td_lieuDeResidence);
+			tr.appendChild(td_styleMusical);
+			table.appendChild(tr);
+			nomDeScene=dj.nomDeScene;
+			}
+		}
+}
+
+function searchByName() {
+	var name = document.getElementById("input_name").value;
+	var url ="/ProjetJEE/api/dj-management/modification?name="+name;  
+	loadDJs(url);
+}
+
+
+
+function deleteDJ(){
+	var url ="/ProjetJEE/api/dj-management/supprimer?nom="+nomDeScene;
+	fetch(url);
+	
+	
+}
+
+</script>
+<title>Modification DJs</title>
+</head>
+<body onload="loadDJs('/ProjetJEE/api/dj-management/modification')">
+<input type="text" id="input_name">
+
+    <!-- Boutons -->
+    <button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
+ <h1>DJ Correspondant</h1>   
+ <div id="djlist"></div>   
+ <button onclick="deleteDJ()">Supprimer le DJ</button>
+</body>
+</html>

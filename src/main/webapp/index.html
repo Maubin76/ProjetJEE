@@ -72,33 +72,23 @@ function process(djs) {
 	}
 }
 
-function searchByName() {
-	var name = document.getElementById("input_name").value;
-	var url ="/DJs/api/dj-management/djs?name="+name;  
-	loadDJs(url);
-}
 
-function searchWithHistory() {
-    var name = document.getElementById('input_name').value;
-    var url = "/DJs/api/book-management/djs-session?name=" + name;
-    loadDJs(url);
-}
 
 </script>
-<title></title></head>
+<title>Liste des DJs</title></head>
 <body onload="loadDJs('/ProjetJEE/api/dj-management/djs')">
 
 <h1>Liste des DJs</h1>
-
+<a href="modification.html">
+     <button>Modifier la liste</button>
+</a>
+<a href="ajout.html">
+        <button>Ajouter un DJ</button>
+</a>
+    
 <div id="djlist"></div>
-	<!-- Champ de texte -->
-	</br>
-    <input type="text" id="input_name">
-
-    <!-- Boutons -->
-    <button onclick="searchByName()">Rechercher</button>
-    </br>
-    <button onclick="searchWithHistory()">Historique</button>
+	
+    
 
 </body>
 </html>
