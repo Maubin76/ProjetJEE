@@ -6,9 +6,9 @@ public class Lieu {
     private String ville;
     private String pays;
     private String continent;
-    
-    public Lieu(String nomLieu, String ville, String pays, String continent) {
-    	this.nomLieu = nomLieu;
+
+    public Lieu(String nom, String ville, String pays, String continent) {
+    	this.nomLieu = nom;
     	this.ville = ville;
     	this.pays = pays;
     	this.continent = continent;

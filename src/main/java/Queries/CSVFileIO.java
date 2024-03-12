@@ -1,7 +1,11 @@
 package Queries;
 
 import java.io.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Enumeration;
+import java.util.Properties;
 
 /**
  * Permet de lire et d'écrire dans un fichier CSV
@@ -50,6 +54,14 @@ public class CSVFileIO {
 
         return tab;
     }
+    
+    public static void main(String[] args) throws IOException {
+		CSVFileIO io = new CSVFileIO();
+		ArrayList<String[]> liste = io.readCSV("C:\\Users\\geoff\\OneDrive\\Documents\\JAVA_DEV\\workspace\\ProjetJEE\\src\\main\\java\\Queries\\liste.csv");
+		System.out.println(liste.get(0)[0]);
+		System.out.println(liste.get(1)[0]);
+		System.out.println(liste.get(2)[0]);
+	}
 
 }
 
