@@ -72,6 +72,21 @@ public class DJController {
 		@GET
 		@Produces(MediaType.APPLICATION_JSON)
 		@Path("/ajout")
+		public void modifyDJs(@QueryParam("nom") String nomScene,
+				@QueryParam("champ") String champ,
+				@QueryParam("modification") String modification) {
+			List<DJ> djs;
+			djs = djDao.findByNomDeScene(nomScene);
+			Iterator<DJ> iterateur = djs.iterator();
+			while (iterateur.hasNext()){
+				DJ djactuel= iterateur.next();
+				djDao.modifyDJ(djactuel,champ,modification);
+			}
+		}
+		
+		@GET
+		@Produces(MediaType.APPLICATION_JSON)
+		@Path("/ajout")
 		public void addDJs(@QueryParam("nom") String nom,
 				@QueryParam("prenom") String prenom,
 				@QueryParam("dateDeNaissance") String dateDeNaissance,
