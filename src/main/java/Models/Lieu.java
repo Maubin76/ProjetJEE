@@ -13,7 +13,7 @@ public class Lieu {
     	this.pays = pays;
     	this.continent = continent;
     }
-    
+
     public String getNomLieu() {
         return nomLieu;
     }

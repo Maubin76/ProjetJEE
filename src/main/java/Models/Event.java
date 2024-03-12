@@ -7,6 +7,12 @@ public class Event {
     private DJ dj;
     private Lieu lieu;
     private Date date;
+    
+    public Event(DJ dj, Lieu lieu, Date date) {
+    	this.dj = dj;
+    	this.lieu = lieu;
+    	this.date = date;
+    }
 
     public DJ getDj() {
         return dj;
