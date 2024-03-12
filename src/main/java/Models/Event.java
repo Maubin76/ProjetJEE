@@ -11,7 +11,6 @@ public class Event {
     private LocalTime horaireDebut;
     private LocalTime horaireFin;
     
-    
     public Event(DJ dj, Lieu lieu, Date date, LocalTime horaireDebut, LocalTime horaireFin) {
     	this.dj = dj;
     	this.lieu = lieu;
