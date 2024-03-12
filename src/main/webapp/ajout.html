@@ -29,7 +29,6 @@ function ajoutDJ(){
 	var lieuDeResidence = document.getElementById("lieuDeResidence").value;
 	var styleDeMusique = document.getElementById("styleDeMusique").value;
 	var url ="/ProjetJEE/api/dj-management/ajout?nom="+nom+"&prenom="+prenom+"&dateDeNaissance="+dateDeNaissance+"&nomDeScene="+nomDeScene+"&lieuDeResidence="+lieuDeResidence+"&styleDeMusique="+styleDeMusique;
-	console.log(url);
 	fetch(url);
 }
 
@@ -39,21 +38,27 @@ function ajoutDJ(){
 </head>
 <body>
 <h1>DJ à ajouter</h1>
-<p>Nom : <input type="text" id="nom"> </p>
-<p>Prénom :<input type="text" id="prenom"> </p>
-<p>Date de naissance (format "yyyy-MM-dd") :<input type="text" id="dateDeNaissance"> </p>
-<p>Nom de scène :<input type="text" id="nomDeScene"> </p>
-<p>Lieu de résidence :<input type="text" id="lieuDeResidence"> </p>
-
-<p>Style de musique :<select id="styleDeMusique" name="styleDeMusique">
+<form onsubmit="ajoutDJ()">
+<label for="nom">Nom :</label>
+<input type="text" id="nom" name="nom" required>
+<label for="prenom">Prénom :</label>
+<input type="text" id="prenom" name="prenom" required>
+<label for="dateDeNaissance">Date de naissance (Il faut cliquer sur une date avant de modifier à la main))</label>
+<input type="date" id="dateDeNaissance" name="dateDeNaissance" required>
+<label for="nomDeScene">Nom de scène :</label>
+<input type="text" id="nomDeScene" name="nomDeScene" required>
+<label for="lieuDeResidence">Lieu de résidence :</label>
+<input type="text" id="lieuDeResidence" name="lieuDeResidence" required>
+<label for="styleDeMusique">Style Musical :</label>
+<select id="styleDeMusique" name="styleDeMusique">
                 <option value="1">Electro</option>
                 <option value="2">House</option>
                 <option value="3">Hard style</option>
                 <option value="4">EDM</option>
-              </select> </p>
+              </select> 
 
 
     <!-- Boutons -->
-    <button onclick="ajoutDJ()">Ajouter ce DJ</button>
+<input type="submit" value="Ajouter ce DJ"> </form>
 </body>
 </html>
