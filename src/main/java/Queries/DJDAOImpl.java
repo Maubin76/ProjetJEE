@@ -17,6 +17,47 @@ import Models.StyleMusical;
 public class DJDAOImpl implements DJDAO {
 
 	@Override
+	public DJ findByID(UUID id) {
+		DJ dj = null;
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery("SELECT * FROM DJ WHERE id = '" + id.toString() + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			rs.next();
+
+			UUID _id = UUID.fromString(rs.getString("id"));
+			String prenom = rs.getString("prenom");
+			String nom = rs.getString("nom");
+			String nomDeScene = rs.getString("nomDeScene");
+			Date dateDeNaissance = rs.getDate("dateDeNaissance");
+			String lieuDeResidence = rs.getString("lieuDeResidence");
+			StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
+				
+			dj = new DJ(_id, nom, prenom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return dj;
+	}
+	
+	@Override
 	public void insertDJtoDB(DJ dj) {
 		
 		String id = dj.getId().toString();
@@ -244,13 +285,13 @@ public class DJDAOImpl implements DJDAO {
 		// On affiche tous les noms de scène
 		List<DJ> liste = dao.findByAll();
 		for(int i=0; i<liste.size(); i++) {
-			String id = liste.get(0).getId().toString();
-			String prenom = liste.get(0).getPrenom();
-			String nom = liste.get(0).getNom();
-			String nomDeScene = liste.get(0).getNomDeScene();
-			String dateDeNaissance = liste.get(0).getDateDeNaissance().toString();
-			String lieuDeResidence = liste.get(0).getLieuDeResidence();
-			String style = liste.get(0).getStyleMusical().toString();
+			String id = liste.get(i).getId().toString();
+			String prenom = liste.get(i).getPrenom();
+			String nom = liste.get(i).getNom();
+			String nomDeScene = liste.get(i).getNomDeScene();
+			String dateDeNaissance = liste.get(i).getDateDeNaissance().toString();
+			String lieuDeResidence = liste.get(i).getLieuDeResidence();
+			String style = liste.get(i).getStyleMusical().toString();
 			
 			String djString = (i+1) + " " + id + " " + prenom + " " + nom + " " + 
 					nomDeScene + " " + dateDeNaissance + " " + 

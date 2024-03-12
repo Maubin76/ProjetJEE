@@ -18,6 +18,44 @@ import Models.StyleMusical;
 public class ClubDAOImpl extends ClubDAO{
 
 	@Override
+	public Lieu findByName(String nom) {
+		
+		Lieu lieu = null;
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery("SELECT * FROM Clubs WHERE nom = '" + nom + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			rs.next();
+
+			String ville = rs.getString("ville");
+			String pays = rs.getString("pays");
+			String continent = rs.getString("continent");
+			
+			lieu = new Lieu(nom, ville, pays, continent);
+
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return lieu;
+	}
+	
+	@Override
 	public List<Lieu> findByAll() {
 		
 		List<Lieu> resultList = new ArrayList<Lieu>();
