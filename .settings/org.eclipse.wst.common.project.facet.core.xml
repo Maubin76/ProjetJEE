@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <faceted-project>
-  <runtime name="_Users_theo_Desktop_ENSSAT_2A_ProgWeb_DevJava_tomcat_apache-tomcat-10.1.19"/>
+  <runtime name="Apache Tomcat v10.1"/>
   <fixed facet="jst.web"/>
   <fixed facet="wst.jsdt.web"/>
   <fixed facet="java"/>
