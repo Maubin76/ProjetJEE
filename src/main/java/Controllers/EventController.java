@@ -36,8 +36,9 @@ public class EventController {
 		DJ dj = new DJ("nomDJ", "prenomDJ", "nomDeSceneDJ", addDays(dateMin, -10000), "residenceDJ", StyleMusical.Electro);
 		Lieu lieu = new Lieu("nomLieu", "villeLieu", "paysLieu", "continentLieu");
 		List<Event> eventList = new ArrayList<>();
-		eventList.add(new Event(dj, lieu, addDays(dateMin, -10), LocalTime.parse("20:00:00"), LocalTime.parse("23:30:00")));
-		eventList.add(new Event(dj, lieu, addDays(dateMin, -100), LocalTime.parse("18:00:00"), LocalTime.parse("22:00:00")));
+
+		//eventList.add(new Event(dj, lieu, addDays(dateMin, -10)));
+		//eventList.add(new Event(dj, lieu, addDays(dateMin, -100)));
 		
         req.setAttribute("eventsList", eventList); // Ajoutez la liste des événements à l'objet HttpServletRequest
         HttpSession session = req.getSession(); // Obtenez la session
