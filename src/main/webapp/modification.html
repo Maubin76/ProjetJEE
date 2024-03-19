@@ -87,10 +87,15 @@ function searchByName() {
 function deleteDJ(){
 	var url ="/ProjetJEE/api/dj-management/supprimer?nom="+nomDeScene;
 	fetch(url);
-	
-	
 }
 
+function modifierDJ(){
+	var champ= document.getElementById("champ").value;
+	var modification = document.getElementById("modification").value;
+	var url ="/ProjetJEE/api/dj-management/modifier?nom="+nomDeScene+"&champ="+champ+"&modification="+modification;
+	fetch(url);
+
+}
 </script>
 <title>Modification DJs</title>
 </head>
@@ -102,5 +107,21 @@ function deleteDJ(){
  <h1>DJ Correspondant</h1>   
  <div id="djlist"></div>   
  <button onclick="deleteDJ()">Supprimer le DJ</button>
+ 
+<form onsubmit="modifierDJ()">
+<label for="champ">Champ à modifier :</label>
+<select id="champ" name="champ" onchange="verifieDate">
+                <option value="nom">Nom</option>
+                <option value="prenom">Prénom</option>
+                <option value="nomDeScene">Nom de scène</option>
+                <option value="dateDeNaissance">Date de naissance</option>
+                <option value="lieuDeResidence">Lieu de résidence</option>
+                <option value="styleMusical">Style musical</option>
+              </select>
+<label for="modification">Modification : </label>
+<input type="text" id="modification" name="modification" required>             
+<input type="submit" value="Modifier ce DJ">            
+</form>
+ 
 </body>
 </html>

@@ -106,5 +106,19 @@ public class DJController {
 			DJ dj= new DJ(nom,prenom,nomDeScene,dateNaissance,lieuDeResidence,styleMusical);
 			djDao.insertDJtoDB(dj);
 		}
-		
+	
+		@GET
+		@Produces(MediaType.APPLICATION_JSON)
+		@Path("/modifier")
+		public void modifyDJs(@QueryParam("nom") String nomScene,
+				@QueryParam("champ") String champ,
+				@QueryParam("modification") String modification) {
+			List<DJ> djs;
+			djs = djDao.findByNomDeScene(nomScene);
+			Iterator<DJ> iterateur = djs.iterator();
+			while (iterateur.hasNext()){
+				DJ djactuel= iterateur.next();
+				djDao.modifyDJ(djactuel,champ,modification);
+			}
+		}
 }

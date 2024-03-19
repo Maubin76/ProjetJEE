@@ -20,8 +20,8 @@ public class EventController {
 		DJ dj = new DJ("nomDJ", "prenomDJ", "nomDeSceneDJ", addDays(dateMin, -10000), "residenceDJ", StyleMusical.Electro);
 		Lieu lieu = new Lieu("nomLieu", "villeLieu", "paysLieu", "continentLieu");
 		List<Event> eventList = new ArrayList<>();
-		eventList.add(new Event(dj, lieu, addDays(dateMin, -10)));
-		eventList.add(new Event(dj, lieu, addDays(dateMin, -100)));
+		//eventList.add(new Event(dj, lieu, addDays(dateMin, -10)));
+		//eventList.add(new Event(dj, lieu, addDays(dateMin, -100)));
 		
 	}
 	
