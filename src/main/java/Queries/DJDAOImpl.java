@@ -207,6 +207,50 @@ public class DJDAOImpl implements DJDAO {
 		
 		return resultList;
 	}
+	
+	@Override
+	public List<DJ> findByPartialNomDeScene(String _nomDeScene) {
+		
+		List<DJ> resultList = new ArrayList<DJ>();
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery("SELECT * FROM DJ WHERE nomDeScene LIKE '" + _nomDeScene + "%'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while(rs.next()) {
+				UUID id = UUID.fromString(rs.getString("id"));
+				String prenom = rs.getString("prenom");
+				String nom = rs.getString("nom");
+				String nomDeScene = rs.getString("nomDeScene");
+				Date dateDeNaissance = rs.getDate("dateDeNaissance");
+				String lieuDeResidence = rs.getString("lieuDeResidence");
+				StyleMusical style = StyleMusical.valueOf(rs.getString("styleMusical"));
+				
+				DJ dj = new DJ(id, nom, prenom, nomDeScene, dateDeNaissance, lieuDeResidence, style);
+				
+				resultList.add(dj);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return resultList;
+	}
 
 	@Override
 	public void deleteFromDB(DJ dj) {
@@ -276,7 +320,10 @@ public class DJDAOImpl implements DJDAO {
 	
 	
 	public static void main(String[] args) {
-		afficherDJ();
+		
+		
+        
+		
 	}
 	
 	private static void afficherDJ() {

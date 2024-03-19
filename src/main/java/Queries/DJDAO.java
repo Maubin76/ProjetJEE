@@ -15,6 +15,8 @@ public interface DJDAO {
 	public void insertDJtoDB(DJ dj);
 	// Renvoie les DJ de nom de scene "nomDeScene"
 	public List<DJ> findByNomDeScene(String nomDeScene);
+	// Renvoie les DJ de nom de scene commençant par "nomDeScene"
+	public List<DJ> findByPartialNomDeScene(String nomDeScene);
 	// Renvoie le DJ d'ID "id"
 	public DJ findByID(UUID id);
 	// Supprime un DJ de la BDD

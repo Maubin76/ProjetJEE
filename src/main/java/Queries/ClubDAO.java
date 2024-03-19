@@ -10,4 +10,5 @@ public abstract class ClubDAO {
 	public abstract void insertClubtoDB(Lieu lieu);
 	public abstract List<Lieu> findByAll();
 	public abstract Lieu findByName(String nom);
+	
 }

@@ -134,7 +134,7 @@ public class EventDAOImpl extends EventDAO {
 
 	@Override
 	public List<Event> EventListBetweenDates(Date dateMin, Date dateMax) {
-List<Event> resultList = new ArrayList<Event>();
+		List<Event> resultList = new ArrayList<Event>();
 		
 		Connection connection = DBManager.getInstance().getConnection();
 		/*
@@ -184,7 +184,27 @@ List<Event> resultList = new ArrayList<Event>();
 	}
 	
 	public static void main(String[] args) {
-
+		
+		
+		afficherEvent();
+	}
+	
+	private static void afficherEvent() {
+		EventDAO dao = new EventDAOImpl();
+		
+		// On affiche tous les noms de scène
+		List<Event> liste = dao.findByAll();
+		for(int i=0; i<liste.size(); i++) {
+			String dj = liste.get(i).getDj().getId().toString();
+			String lieu = liste.get(i).getLieu().getNomLieu();
+			String date = liste.get(i).getDate().toString();
+			String horaireDebut = liste.get(i).getHoraireDebut().toString();
+			String horaireFin = liste.get(i).getHoraireFin().toString();
+			
+			String djString = (i+1) + " " + dj + " " + lieu + " " + date + " " + 
+					horaireDebut + " " + horaireFin;
+			System.out.println(djString);
+		}
 	}
 
 }
