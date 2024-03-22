@@ -113,6 +113,7 @@ public class DJController {
 		public void modifyDJs(@QueryParam("nom") String nomScene,
 				@QueryParam("champ") String champ,
 				@QueryParam("modification") String modification) {
+			System.out.println(champ);
 			List<DJ> djs;
 			djs = djDao.findByNomDeScene(nomScene);
 			Iterator<DJ> iterateur = djs.iterator();
