@@ -321,8 +321,13 @@ public class DJDAOImpl implements DJDAO {
 	
 	public static void main(String[] args) {
 		
+		DJDAO dao = new DJDAOImpl();
 		
-        
+		afficherDJ();
+		List<DJ> listedj = dao.findByNomDeScene("Deadmau5");
+		DJ dj = listedj.get(0);
+		dao.modifyDJ(dj, "prenom", "zgeg");
+        afficherDJ();
 		
 	}
 	
