@@ -85,5 +85,13 @@ public class DJ {
     public void setStyleMusical(StyleMusical styleMusical) {
         this.styleMusical = styleMusical;
     }
+
+	@Override
+	public String toString() {
+		return "DJ [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", nomDeScene=" + nomDeScene
+				+ ", dateDeNaissance=" + dateDeNaissance + ", lieuDeResidence=" + lieuDeResidence + ", styleMusical="
+				+ styleMusical + "]";
+	}
+    
 }
 

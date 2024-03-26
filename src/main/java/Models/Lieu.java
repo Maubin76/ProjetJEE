@@ -45,4 +45,10 @@ public class Lieu {
     public void setContinent(String continent) {
         this.continent = continent;
     }
+
+	@Override
+	public String toString() {
+		return "Lieu [nomLieu=" + nomLieu + ", ville=" + ville + ", pays=" + pays + ", continent=" + continent + "]";
+	}
+    
 }

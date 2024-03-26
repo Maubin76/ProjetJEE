@@ -73,6 +73,10 @@ function process(djs) {
 			table.appendChild(tr);
 			nomDeScene=dj.nomDeScene;
 			}
+		var champModifier = document.getElementById("nomDeSceneDJ")
+		champModifier.value=nomDeScene
+		var champSupprimer=document.getElementById("nomDeSceneDJSupprimer")
+		champSupprimer.value=nomDeScene
 		}
 }
 
@@ -84,18 +88,18 @@ function searchByName() {
 
 
 
-function deleteDJ(){
+/*function deleteDJ(){
 	var url ="/ProjetJEE/api/dj-management/supprimer?nom="+nomDeScene;
 	fetch(url);
-}
+}*/
 
-function modifierDJ(){
+/*function modifierDJ(){
 	var champ= document.getElementById("champ").value;
 	var modification = document.getElementById("modification").value;
 	var url ="/ProjetJEE/api/dj-management/modifier?nom="+nomDeScene+"&champ="+champ+"&modification="+modification;
 	fetch(url);
+}*/
 
-}
 </script>
 <title>Modification DJs</title>
 </head>
@@ -106,9 +110,11 @@ function modifierDJ(){
     <button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
  <h1>DJ Correspondant</h1>   
  <div id="djlist"></div>   
- <button onclick="deleteDJ()">Supprimer le DJ</button>
- 
-<form onsubmit="modifierDJ()">
+<br> 
+<form action="/ProjetJEE/api/dj-management/modifier" method="post">
+<h3>Nom de scene du DJ a modifier</h3>
+<input type="text" id="nomDeSceneDJ" name="nomDeSceneDJ" readonly required>             
+
 <label for="champ">Champ à modifier :</label>
 <select id="champ" name="champ" onchange="verifieDate">
                 <option value="nom">Nom</option>
@@ -120,7 +126,13 @@ function modifierDJ(){
               </select>
 <label for="modification">Modification : </label>
 <input type="text" id="modification" name="modification" required>             
-<input type="submit" value="Modifier ce DJ">            
+<input type="submit" value="Modifier ce DJ">
+</form>
+
+<form action="/ProjetJEE/api/dj-management/supprimer" method="post">
+<input type="hidden" id="nomDeSceneDJSupprimer" name="nomDeSceneDJSupprimer" readonly required>
+<input type="submit" value="Supprimer ce DJ">     
+
 </form>
  
 </body>
