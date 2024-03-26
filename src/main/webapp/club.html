@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Event</title>
+</head>
+<script>
+function loadEvents(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+
+function process(clubs) {
+	var clublist = document.getElementById("clublist");
+	
+	if (clublist.hasChildNodes()) {
+		clublist.removeChild(djlist.firstChild);
+	}
+	
+	var table = document.createElement("table");
+	clublist.appendChild(table);
+	var thead = document.createElement("thead");
+	var trHead = document.createElement("tr");
+	trHead.innerHTML = "<th class='column-header'>Nom</th>" +
+	                   "<th class='column-header'>Ville</th>" +
+	                   "<th class='column-header'>Pays</th>" +
+	                   "<th class='column-header'>Continent</th>";
+	thead.appendChild(trHead);
+	table.appendChild(thead);
+	for (var club of clubs) {
+		var tr = document.createElement("tr");
+		
+		var td_nom = document.createElement("td");
+		td_nom.append(club.nom);
+		var td_ville = document.createElement("td");
+		td_ville.append(club.ville);
+		var td_pays = document.createElement("td");
+		td_pays.append(club.pays);
+		var td_continent = document.createElement("td");
+		td_continent.append(club.continent);
+		tr.appendChild(td_nom);
+		tr.appendChild(td_ville);
+		tr.appendChild(td_pays);
+		tr.appendChild(td_continent);
+		table.appendChild(tr);
+		
+		
+	}
+}
+
+
+
+</script>
+<body onload="loadEvents('/ProjetJEE/api/club-management/clubs')">
+	
+    <h2>Clubs disponibles</h2>
+
+    <table border="1">
+
+    </table>
+<div id="clublist"></div>
+</body>
+</html>

@@ -56,10 +56,10 @@ public class DJController {
 			return json;	
 		}
 		
-		@GET
-		@Produces(MediaType.APPLICATION_JSON)
+		@POST
+		@Consumes("application/x-www-form-urlencoded")
 		@Path("/supprimer")
-		public void deleteDJs(@QueryParam("nom") String nomScene) {
+		public void deleteDJs(@FormParam("nomDeSceneDJSupprimer") String nomScene) {
 			List<DJ> djs;
 			djs = djDao.findByNomDeScene(nomScene);
 			Iterator<DJ> iterateur = djs.iterator();
@@ -69,15 +69,16 @@ public class DJController {
 			}
 		}
 		
-		@GET
-		@Produces(MediaType.APPLICATION_JSON)
+		@POST
 		@Path("/ajout")
-		public void addDJs(@QueryParam("nom") String nom,
-				@QueryParam("prenom") String prenom,
-				@QueryParam("dateDeNaissance") String dateDeNaissance,
-				@QueryParam("nomDeScene") String nomDeScene,
-				@QueryParam("lieuDeResidence") String lieuDeResidence,
-				@QueryParam("styleDeMusique") int styleDeMusique) {
+		@Consumes("application/x-www-form-urlencoded")
+		
+		public void addDJs(@FormParam("nom") String nom,
+				@FormParam("prenom") String prenom,
+				@FormParam("dateDeNaissance") String dateDeNaissance,
+				@FormParam("nomDeScene") String nomDeScene,
+				@FormParam("lieuDeResidence") String lieuDeResidence,
+				@FormParam("styleDeMusique") int styleDeMusique) {
 			SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
 			Date dateNaissance = null;
 			try {
@@ -107,15 +108,16 @@ public class DJController {
 			djDao.insertDJtoDB(dj);
 		}
 	
-		@GET
-		@Produces(MediaType.APPLICATION_JSON)
+		@POST
 		@Path("/modifier")
-		public void modifyDJs(@QueryParam("nom") String nomScene,
-				@QueryParam("champ") String champ,
-				@QueryParam("modification") String modification) {
+		@Consumes("application/x-www-form-urlencoded")
+
+		public void modifyDJs(@FormParam("nomDeSceneDJ") String nomDeSceneDJ,
+				@FormParam("champ") String champ,
+				@FormParam("modification") String modification) {
 			System.out.println(champ);
 			List<DJ> djs;
-			djs = djDao.findByNomDeScene(nomScene);
+			djs = djDao.findByNomDeScene(nomDeSceneDJ);
 			Iterator<DJ> iterateur = djs.iterator();
 			while (iterateur.hasNext()){
 				DJ djactuel= iterateur.next();

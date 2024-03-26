@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<html>
+<head>
+    <meta charset="ISO-8859-1">
+    <title>Event</title>
+</head>
+<script>
+function loadEvents(url) {
+	fetch(url)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+
+function process(events) {
+    var eventlist = document.getElementById("eventlist");
+
+    if (eventlist.hasChildNodes()) {
+        eventlist.removeChild(eventlist.firstChild);
+    }
+
+    var table = document.createElement("table");
+    eventlist.appendChild(table);
+    var thead = document.createElement("thead");
+    var trHead = document.createElement("tr");
+    trHead.innerHTML = "<th class='column-header'>DJ</th>" +
+                       "<th class='column-header'>Lieu</th>" +
+                       "<th class='column-header'>Date</th>" +
+                       "<th class='column-header'>Horaire de début</th>" +
+                       "<th class='column-header'>Horaire de fin</th>";
+    thead.appendChild(trHead);
+    table.appendChild(thead);
+    for (var event of events) {
+        var tr = document.createElement("tr");
+
+        var td_dj = document.createElement("td");
+        td_dj.textContent = event.nomDJ;
+        var td_lieu = document.createElement("td");
+        td_lieu.textContent = event.nomEvent;
+        var td_date = document.createElement("td");
+        td_date.textContent = event.date;
+        var td_horaireDebut = document.createElement("td");
+        td_horaireDebut.textContent = event.horaireDebut;
+        var td_horaireFin = document.createElement("td");
+        td_horaireFin.textContent = event.horaireFin;
+
+        tr.appendChild(td_dj);
+        tr.appendChild(td_lieu);
+        tr.appendChild(td_date);
+        tr.appendChild(td_horaireDebut);
+        tr.appendChild(td_horaireFin);
+
+        var td_action = document.createElement("td");
+        var form = document.createElement("form");
+        
+
+        table.appendChild(tr);
+    }
+}
+
+
+
+
+</script>
+<body onload="loadEvents('/ProjetJEE/api/event-management/events')">
+	
+    <h2>Événements des 30 prochains jours</h2>
+
+    <table border="1">
+
+    </table>
+<div id="eventlist"></div>
+<h2>Assigner un dj à un evenement</h2>
+<form action="/ProjetJEE/api/event-management/ajoute" method="post">
+<div>DJ : <input type="text" name="dj"></div>
+<div>Evenement : <input type="text" name="evenement"></div>
+<input type="submit" value="Ajouter">
+</form>
+</body>
+</html>

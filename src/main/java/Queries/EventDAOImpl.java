@@ -26,14 +26,14 @@ public class EventDAOImpl extends EventDAO {
 		DJ dj = event.getDj();
 		Lieu lieu = event.getLieu();
 		Date date = event.getDate();
-		LocalTime horaireDebut = event.getHoraireDebut();
-		LocalTime horaireFin = event.getHoraireFin();
+		Time horaireDebut = event.getHoraireDebut();
+		Time horaireFin = event.getHoraireFin();
 		
 		// Convertion utilisable SQL
 		String djID = dj.getId().toString();
 		String lieuNom = lieu.getNomLieu();
-		Time horaireDebutSQL = Time.valueOf(horaireDebut);
-		Time horaireFinSQL = Time.valueOf(horaireFin);
+		Time horaireDebutSQL = horaireDebut;
+		Time horaireFinSQL = horaireFin;
 		
 		Connection connection = DBManager.getInstance().getConnection();
 		
@@ -111,8 +111,8 @@ public class EventDAOImpl extends EventDAO {
 				String djID = rs.getString("dj");
 				String lieuNom = rs.getString("lieu");
 				Date date = rs.getDate("date");
-				LocalTime horaireDebut = rs.getTime("horaireDebut").toLocalTime();
-				LocalTime horaireFin = rs.getTime("horaireFin").toLocalTime();
+				Time horaireDebut = rs.getTime("horaireDebut");
+				Time horaireFin = rs.getTime("horaireFin");
 				
 				// On crée un DJDAO pour aller chercher le DJ via son id
 				DJDAO djdao = new DJDAOImpl();
@@ -162,8 +162,8 @@ public class EventDAOImpl extends EventDAO {
 				String djID = rs.getString("dj");
 				String lieuNom = rs.getString("lieu");
 				Date date = rs.getDate("date");
-				LocalTime horaireDebut = rs.getTime("horaireDebut").toLocalTime();
-				LocalTime horaireFin = rs.getTime("horaireFin").toLocalTime();
+				Time horaireDebut = rs.getTime("horaireDebut");
+				Time horaireFin = rs.getTime("horaireFin");
 				
 				// On crée un DJDAO pour aller chercher le DJ via son id
 				DJDAO djdao = new DJDAOImpl();

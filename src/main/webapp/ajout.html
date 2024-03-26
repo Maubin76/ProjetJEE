@@ -21,7 +21,7 @@ margin-top: 10px;}
 <meta charset="UTF-8">
 <script>
 
-function ajoutDJ(){
+/*function ajoutDJ(){
 	var nom = document.getElementById("nom").value;
 	var prenom = document.getElementById("prenom").value;
 	var dateDeNaissance = document.getElementById("dateDeNaissance").value;
@@ -30,7 +30,7 @@ function ajoutDJ(){
 	var styleDeMusique = document.getElementById("styleDeMusique").value;
 	var url ="/ProjetJEE/api/dj-management/ajout?nom="+nom+"&prenom="+prenom+"&dateDeNaissance="+dateDeNaissance+"&nomDeScene="+nomDeScene+"&lieuDeResidence="+lieuDeResidence+"&styleDeMusique="+styleDeMusique;
 	fetch(url);
-}
+}*/
 
 
 </script>
@@ -38,7 +38,7 @@ function ajoutDJ(){
 </head>
 <body>
 <h1>DJ à ajouter</h1>
-<form onsubmit="ajoutDJ()">
+<form action="/ProjetJEE/api/dj-management/ajout" method="post">
 <label for="nom">Nom :</label>
 <input type="text" id="nom" name="nom" required>
 <label for="prenom">Prénom :</label>
