@@ -10,13 +10,12 @@ public abstract class EventDAO {
 	
 	public abstract List<Event> findByAll();
 	
-	public abstract List<Event> EventListBetweenDates(Date dateMin, Date dateMax);
+	public abstract List<Event> eventListBetweenDates(Date dateMin, Date dateMax);
 	
 	public abstract void insertEventtoDB(Event event);
 	
 	public abstract List<Event> findByNom(String nom);
 	
 	public abstract void addDjtoEvent(DJ dj, Event event);
-	
 }
 
