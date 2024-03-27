@@ -36,15 +36,17 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/event-management")
 public class EventController {
 	public class EventJSON {
+		private String nom;
 		private String nomDJ;
-		private String nomEvent;
+		private String nomLieu;
 		private Date date;
 	    private Time horaireDebut;
 	    private Time horaireFin;
 	    
-	    public EventJSON(String nomDJ, String nomEvent, Date date, Time horaireDebut,Time horaireFin) {
+	    public EventJSON(String nom, String nomDJ, String nomLieu, Date date, Time horaireDebut,Time horaireFin) {
+	    	this.nom = nom;
 	    	this.nomDJ = nomDJ;
-	    	this.nomEvent = nomEvent;
+	    	this.nomLieu = nomLieu;
 	    	this.date = date;
 	    	this.horaireDebut = horaireDebut;
 	    	this.horaireFin = horaireFin;
@@ -82,11 +84,11 @@ public class EventController {
 		Lieu lieu = new Lieu("nomLieu", "villeLieu", "paysLieu", "continentLieu");
 		List<Event> eventList = new ArrayList<>();
 		Time time=new Time(0);
-		eventList.add(new Event(dj,lieu,dateMax,time,time));
+		eventList.add(new Event("nom", dj, lieu, dateMax, time, time));
 		List<EventJSON> eventListJSON=new ArrayList<>();
 		//eventList = eventDao.findByAll();
 		for(Event event:eventList) {
-			eventListJSON.add(new EventJSON(event.getDj().getNomDeScene(),event.getLieu().getNomLieu(),event.getDate(),event.getHoraireDebut(),event.getHoraireFin()));
+			eventListJSON.add(new EventJSON(event.getNom(), event.getDj().getNomDeScene(),event.getLieu().getNomLieu(),event.getDate(),event.getHoraireDebut(),event.getHoraireFin()));
 		}
     	GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
