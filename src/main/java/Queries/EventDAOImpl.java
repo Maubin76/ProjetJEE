@@ -107,9 +107,9 @@ public class EventDAOImpl extends EventDAO {
 		
 		if(dj == null) {
 			String sql = "INSERT INTO `info_captainm_schema`.`Events` "
-					+ "(`nom`, `lieu`, `date`, `horaireDebut`, `horaireFin`)"
+					+ "(`nom`, `lieu`, `date`, `horaireDebut`, `horaireFin`, `dj`)"
 					+ "VALUES "
-					+ "(?, ?, ?, ?, ?)";
+					+ "(?, ?, ?, ?, ?, ?)";
 		
 			try {
 				Connection connection = DBManager.getInstance().getConnection();
@@ -122,6 +122,9 @@ public class EventDAOImpl extends EventDAO {
 				preparedStatement.setDate(3, date);
 				preparedStatement.setTime(4, horaireDebutSQL);
 				preparedStatement.setTime(5, horaireFinSQL);
+				
+				// Pour insérer NULL dans la colonne DJ
+			    preparedStatement.setNull(6, java.sql.Types.VARCHAR);
 				
 				int rowsAffected = preparedStatement.executeUpdate();
 				
@@ -223,15 +226,21 @@ public class EventDAOImpl extends EventDAO {
 				Time horaireDebut = rs.getTime("horaireDebut");
 				Time horaireFin = rs.getTime("horaireFin");
 				
-				// On crée un DJDAO pour aller chercher le DJ via son id
-				DJDAO djdao = new DJDAOImpl();
-				DJ dj = djdao.findByID(UUID.fromString(djID));
 				// On crée un ClubDAO pour aller chercher le club via le nom
 				ClubDAO clubdao = new ClubDAOImpl();
 				Lieu lieu = clubdao.findByName(lieuNom);
 				
-				Event event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
+				Event event;
 				
+				if(djID == null) {
+					event = new Event(nom, null, lieu, date, horaireDebut, horaireFin);
+				} else {
+					// On crée un DJDAO pour aller chercher le DJ via son id
+					DJDAO djdao = new DJDAOImpl();
+					DJ dj = djdao.findByID(UUID.fromString(djID));
+					
+					event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
+				}
 				resultList.add(event);
 			}
 		} catch (SQLException e) {
@@ -253,8 +262,7 @@ public class EventDAOImpl extends EventDAO {
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
-		*/
+		}		*/
 		
 		ResultSet rs = null;
 		try {
@@ -294,35 +302,6 @@ public class EventDAOImpl extends EventDAO {
 	}
 	
 	public static void main(String[] args) {
-		/*
-		afficherEvent();
-		
-		DJDAO djdao = new DJDAOImpl();
-		
-		List<DJ> listeDJ = djdao.findByAll();
-		DJ dj1 = listeDJ.get(0);
-		DJ dj2 = listeDJ.get(1);
-		DJ dj3 = listeDJ.get(2);
-		DJ dj4 = listeDJ.get(3);
-		
-		ClubDAO clubdao = new ClubDAOImpl();
-		
-		List<Lieu> listeClubs = clubdao.findByAll();
-		Lieu lieu5 = listeClubs.get(4);
-		
-		Date date5 = Date.valueOf(LocalDate.now().plusDays(92));
-		
-		Time horaireDebut5 = Time.valueOf(LocalTime.of(16, 0));
-		
-		Time horaireFin5 = Time.valueOf(LocalTime.of(23, 0));
-		
-		Event event5 = new Event("Event5" , null, lieu5, date5, horaireDebut5, horaireFin5);
-		
-		EventDAO eventDAO = new EventDAOImpl();
-		
-		eventDAO.insertEventtoDB(event5);
-		*/
-		
 		
 		afficherEvent();
 	}
@@ -334,7 +313,12 @@ public class EventDAOImpl extends EventDAO {
 		List<Event> liste = dao.findByAll();
 		for(int i=0; i<liste.size(); i++) {
 			String nom = liste.get(i).getNom();
-			String dj = liste.get(i).getDj().getNom().toString();
+			String dj;
+			if(liste.get(i).getDj() == null) {
+				dj = "null";
+			}else {
+				dj = liste.get(i).getDj().getNom().toString();
+			}
 			String lieu = liste.get(i).getLieu().getNomLieu();
 			String date = liste.get(i).getDate().toString();
 			String horaireDebut = liste.get(i).getHoraireDebut().toString();
