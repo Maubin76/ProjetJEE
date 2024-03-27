@@ -17,5 +17,6 @@ public abstract class EventDAO {
 	public abstract List<Event> findByNom(String nom);
 	
 	public abstract void addDjtoEvent(DJ dj, Event event);
+	
 }
 

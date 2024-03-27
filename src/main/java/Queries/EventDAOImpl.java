@@ -242,7 +242,7 @@ public class EventDAOImpl extends EventDAO {
 	}
 
 	@Override
-	public List<Event> EventListBetweenDates(Date dateMin, Date dateMax) {
+	public List<Event> eventListBetweenDates(Date dateMin, Date dateMax) {
 		List<Event> resultList = new ArrayList<Event>();
 		
 		Connection connection = DBManager.getInstance().getConnection();
