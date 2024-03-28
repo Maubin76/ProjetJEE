@@ -37,7 +37,20 @@ margin-top: 10px;}
 <title>Ajout de DJs</title>
 </head>
 <body>
-<h1>DJ à ajouter</h1>
+<center>
+<h1>Ajouter un DJ</h1>
+<a href="index.html">
+        <button>DJ</button>
+</a>
+<a href="event.html">
+        <button>Prochains events</button>
+</a>
+<a href="club.html">
+        <button>Clubs</button>
+</a>
+</center></br>
+
+<div class="main-container-jee" style="margin:2%;">
 <form action="/ProjetJEE/api/dj-management/ajout" method="post">
 <label for="nom">Nom :</label>
 <input type="text" id="nom" name="nom" required>
@@ -60,5 +73,6 @@ margin-top: 10px;}
 
     <!-- Boutons -->
 <input type="submit" value="Ajouter ce DJ"> </form>
+</div>
 </body>
 </html>

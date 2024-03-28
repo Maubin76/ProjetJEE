@@ -81,7 +81,19 @@ function process(events) {
 </script>
 <body onload="loadEvents('/ProjetJEE/api/event-management/events')">
 	
-    <h2>Événements des 30 prochains jours</h2>
+<center>
+<h1>Liste des events</h1>
+<a href="index.html">
+        <button>DJ</button>
+</a>
+<a href="event.html">
+        <button>Prochains events</button>
+</a>
+<a href="club.html">
+        <button>Clubs</button>
+</a>
+</center></br>
+<div class="main-container-jee" style="margin:2%;">
 
     <table border="1">
 
@@ -93,5 +105,6 @@ function process(events) {
 <div>Evenement : <input type="text" name="evenement"></div>
 <input type="submit" value="Ajouter">
 </form>
+</div>
 </body>
 </html>

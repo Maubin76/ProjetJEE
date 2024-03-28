@@ -82,12 +82,11 @@ function process(djs) {
 
 function searchByName() {
 	var name = document.getElementById("input_name").value;
-	var url ="/ProjetJEE/api/dj-management";  
+	var url = '/ProjetJEE/api/dj-management?name=' + encodeURIComponent(name);
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
 			},
-			body:name,
 			method:"GET"
 	};
 	loadDJs(url, HTTPrequest);
@@ -110,7 +109,20 @@ function searchByName() {
 </script>
 <title>Modification DJs</title>
 </head>
-<body onload="loadDJs('/ProjetJEE/api/dj-management/modification')">
+<body>
+<center>
+<h1>Modification des DJs</h1>
+<a href="index.html">
+        <button>DJ</button>
+</a>
+<a href="event.html">
+        <button>Prochains events</button>
+</a>
+<a href="club.html">
+        <button>Clubs</button>
+</a>
+</center></br>
+<div class="main-container-jee" style="margin:2%;">
 <input type="text" id="input_name">
 
     <!-- Boutons -->
@@ -141,6 +153,6 @@ function searchByName() {
 <input type="submit" value="Supprimer ce DJ">     
 
 </form>
- 
+ </div>
 </body>
 </html>
