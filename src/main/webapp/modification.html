@@ -82,8 +82,15 @@ function process(djs) {
 
 function searchByName() {
 	var name = document.getElementById("input_name").value;
-	var url ="/ProjetJEE/api/dj-management/modification?name="+name;  
-	loadDJs(url);
+	var url ="/ProjetJEE/api/dj-management";  
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			body:name,
+			method:"GET"
+	};
+	loadDJs(url, HTTPrequest);
 }
 
 
@@ -108,7 +115,7 @@ function searchByName() {
 
     <!-- Boutons -->
     <button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
- <h1>DJ Correspondant</h1>   
+ <h1>DJ Correspondant</h1>
  <div id="djlist"></div>   
 <br> 
 <form action="/ProjetJEE/api/dj-management/modifier" method="post">

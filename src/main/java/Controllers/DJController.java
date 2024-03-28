@@ -20,17 +20,10 @@ import jakarta.ws.rs.core.MediaType;
 @Path("/dj-management")
 public class DJController {
 
-	@GET 
-	@Produces(MediaType.TEXT_PLAIN) 
-	@Path("/hello") 
-	public String hello() { 
-		return "Hello World!"; 
-	}
 	private DJDAO djDao = new DJDAOImpl();
 		
 		@GET
 		@Produces(MediaType.APPLICATION_JSON)
-		@Path("/djs")
 		public String getDjs() {
 			List<DJ> djs;
 			djs = djDao.findByAll();
@@ -42,7 +35,7 @@ public class DJController {
 		
 		@GET
 		@Produces(MediaType.APPLICATION_JSON)
-		@Path("/modification")
+		@Consumes(MediaType.TEXT_PLAIN)
 		public String getDjs(@QueryParam("name") String nomScene) {
 			List<DJ> djs;
 			if (nomScene!=null) {

@@ -19,7 +19,15 @@ margin-top: 10px;}
 </style>
 <script>
 function loadDJs(url) {
-	fetch(url)
+	
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			method:"GET"
+	};
+	
+	fetch(url, HTTPrequest)
 	.then(response => response.json())
 	.then(response => process(response))
 	.catch(error => alert("Erreur : " + error));
@@ -76,7 +84,7 @@ function process(djs) {
 
 </script>
 <title>Liste des DJs</title></head>
-<body onload="loadDJs('/ProjetJEE/api/dj-management/djs')">
+<body onload="loadDJs('/ProjetJEE/api/dj-management')">
 
 <h1>Liste des DJs</h1>
 
