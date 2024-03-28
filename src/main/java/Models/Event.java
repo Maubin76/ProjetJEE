@@ -6,13 +6,15 @@ import java.time.LocalTime;
 
 public class Event {
 
+	private String nom;
     private DJ dj;
     private Lieu lieu;
     private Date date;
     private Time horaireDebut;
     private Time horaireFin;
     
-    public Event(DJ dj, Lieu lieu, Date date, Time horaireDebut, Time horaireFin) {
+    public Event(String nom, DJ dj, Lieu lieu, Date date, Time horaireDebut, Time horaireFin) {
+    	this.nom = nom;
     	this.dj = dj;
     	this.lieu = lieu;
     	this.date = date;
@@ -20,6 +22,14 @@ public class Event {
     	this.horaireFin = horaireFin;
     }
 
+    public String getNom() {
+    	return this.nom;
+    }
+    
+    public void setNom(String nom) {
+    	this.nom = nom;
+    }
+    
     public Time getHoraireDebut() {
         return horaireDebut;
     }
