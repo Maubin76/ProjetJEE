@@ -5,6 +5,7 @@
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
 table, th, td {
@@ -86,30 +87,31 @@ function process(djs) {
 <title>Liste des DJs</title></head>
 <body onload="loadDJs('/ProjetJEE/api/dj-management')">
 
+<center>
 <h1>Liste des DJs</h1>
-
 <a href="">
         <button>DJ</button>
 </a>
-    
 <a href="event.html">
         <button>Prochains events</button>
 </a>
-
 <a href="club.html">
         <button>Clubs</button>
 </a>
+</center></br>
 
-    
+<div class="main-container-jee" style="margin:2%;">
 <div id="djlist"></div>
 
 <a href="modification.html">
      <button>Modifier la liste</button>
-</a>
+</a> 
 
 <a href="ajout.html">
         <button>Ajouter un DJ</button>
 </a>
+</div>
+
 	
 
 </body>
