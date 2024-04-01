@@ -40,7 +40,8 @@ function process(events) {
     eventlist.appendChild(table);
     var thead = document.createElement("thead");
     var trHead = document.createElement("tr");
-    trHead.innerHTML = "<th class='column-header'>DJ</th>" +
+    trHead.innerHTML = "<th class='column-header'>Nom</th>" +
+    				   "<th class='column-header'>DJ</th>" +
                        "<th class='column-header'>Lieu</th>" +
                        "<th class='column-header'>Date</th>" +
                        "<th class='column-header'>Horaire de début</th>" +
@@ -49,18 +50,20 @@ function process(events) {
     table.appendChild(thead);
     for (var event of events) {
         var tr = document.createElement("tr");
-
+        var td_nom = document.createElement("td");
+        td_nom.textContent = event.nom;
         var td_dj = document.createElement("td");
         td_dj.textContent = event.nomDJ;
         var td_lieu = document.createElement("td");
-        td_lieu.textContent = event.nomEvent;
+        td_lieu.textContent = event.nomLieu;
         var td_date = document.createElement("td");
         td_date.textContent = event.date;
         var td_horaireDebut = document.createElement("td");
         td_horaireDebut.textContent = event.horaireDebut;
         var td_horaireFin = document.createElement("td");
         td_horaireFin.textContent = event.horaireFin;
-
+		
+        tr.appendChild(td_nom);
         tr.appendChild(td_dj);
         tr.appendChild(td_lieu);
         tr.appendChild(td_date);

@@ -53,7 +53,7 @@ public class EventController {
 	    }
 	}
 	private EventDAO eventDao = new EventDAOImpl();
-	
+	private DJDAO djDao = new DJDAOImpl();
 	/*@GET
     @Path("list")
 	public void ShowNextMonthEvents(@Context HttpServletRequest req, @Context HttpServletResponse resp) throws ServletException, IOException{
@@ -77,16 +77,9 @@ public class EventController {
     public String getEvents() {
     	Date dateMin = new Date(System.currentTimeMillis()); // Date d'aujourd'hui
 		Date dateMax = addDays(dateMin, 30);
-		// List<Event> eventList = EventDAO.EventListBetweenDates(dateMin, dateMin);
-		
-		// Echantillon tampon pour les tests
-		DJ dj = new DJ("nomDJ", "prenomDJ", "nomDeSceneDJ", addDays(dateMin, -10000), "residenceDJ", StyleMusical.Electro);
-		Lieu lieu = new Lieu("nomLieu", "villeLieu", "paysLieu", "continentLieu");
 		List<Event> eventList = new ArrayList<>();
-		Time time=new Time(0);
-		eventList.add(new Event("nom", dj, lieu, dateMax, time, time));
 		List<EventJSON> eventListJSON=new ArrayList<>();
-		//eventList = eventDao.findByAll();
+		eventList = eventDao.eventListBetweenDates(dateMin,dateMax);
 		for(Event event:eventList) {
 			eventListJSON.add(new EventJSON(event.getNom(), event.getDj().getNomDeScene(),event.getLieu().getNomLieu(),event.getDate(),event.getHoraireDebut(),event.getHoraireFin()));
 		}
@@ -99,7 +92,12 @@ public class EventController {
     @POST
     @Path("/ajoute")
     @Consumes("application/x-www-form-urlencoded")
-    public void addDjs(@FormParam("evenement") String evenement,@FormParam("dj") String dj) {
-    	System.out.println(evenement+" "+dj);
+    public void addDjs(@FormParam("evenement") String nomEvenement,@FormParam("dj") String nomSceneDJ) {
+    	DJ dj = djDao.findByNomDeScene(nomSceneDJ).get(0);
+    	Event evenement = eventDao.findByNom(nomEvenement).get(0);
+    	DJ djAssigne= evenement.getDj();
+    	if(dj!=null && evenement!=null && djAssigne==null) {
+    		eventDao.addDjtoEvent(dj, evenement);
+    	}
     }
 }

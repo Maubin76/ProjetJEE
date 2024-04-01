@@ -92,7 +92,31 @@ function searchByName() {
 	loadDJs(url, HTTPrequest);
 }
 
+/*document.getElementById("modifyForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
 
+    // Envoyer la requête AJAX
+    var formData = new FormData(this);
+
+    fetch(this.action, {
+        method: this.method,
+        body: formData
+    })
+    .then(response => {
+        if (!response.ok) {
+            throw new Error('Erreur réseau');
+        }
+        document.getElementById("responseMessage").innerHTML = 'a';
+    })
+    .then(data => {
+        // Afficher la réponse de la requête dans la div responseMessage
+        document.getElementById("responseMessage").innerHTML = data;
+    })
+    .catch(error => {
+        console.error('Erreur:', error);
+        document.getElementById("responseMessage").innerHTML = "Une erreur s'est produite lors du traitement de la demande.";
+    });
+});
 
 /*function deleteDJ(){
 	var url ="/ProjetJEE/api/dj-management/supprimer?nom="+nomDeScene;
@@ -105,6 +129,58 @@ function searchByName() {
 	var url ="/ProjetJEE/api/dj-management/modifier?nom="+nomDeScene+"&champ="+champ+"&modification="+modification;
 	fetch(url);
 }*/
+
+/*document.getElementById("modifyForm").addEventListener("submit", function(event) {
+    event.preventDefault(); // Empêche le formulaire de soumettre normalement
+	
+    var form = event.target;
+    var formData = new FormData(form);
+	console.log("Test");
+    fetch(form.action, {
+        method: "POST",
+        body: formData
+    })
+    .then(response => response.text())
+    .then(data => {
+        document.getElementById("responseDiv").innerHTML = data; // Met à jour le contenu du div avec la réponse
+    })
+    .catch(error => {
+        console.error('Erreur lors de la soumission du formulaire:', error);
+    });
+});*/
+
+function verifieChamp() {
+    var selectBox = document.getElementById("champ");
+    var selectedValue = selectBox.options[selectBox.selectedIndex].value;
+    var inputElement = document.getElementById("modification");
+    var styleSelect = document.getElementById("styleDeMusique");
+
+    // Cache ou affiche le sélecteur de style musical selon la sélection
+    if(selectedValue === "styleMusical") {
+    	inputElement.required=false;
+        inputElement.style.display = "none";
+        styleSelect.style.display = "block";
+    } else {
+    	inputElement.required=true;
+        inputElement.style.display = "block";
+        styleSelect.style.display = "none";
+    }
+
+    switch(selectedValue) {
+        case "nom":
+        case "prenom":
+        case "nomDeScene":
+        case "lieuDeResidence":
+            inputElement.type = "text";
+            break;
+        case "dateDeNaissance":
+            inputElement.type = "date";
+            break;
+        default:
+            inputElement.type = "text";
+            break;
+    }
+}
 
 </script>
 <title>Modification DJs</title>
@@ -130,12 +206,13 @@ function searchByName() {
  <h1>DJ Correspondant</h1>
  <div id="djlist"></div>   
 <br> 
-<form action="/ProjetJEE/api/dj-management/modifier" method="post">
+<form id="modifyForm" action="/ProjetJEE/api/dj-management/modifier" method="post">
 <h3>Nom de scene du DJ a modifier</h3>
 <input type="text" id="nomDeSceneDJ" name="nomDeSceneDJ" readonly required>             
-
+<br>
+<br>
 <label for="champ">Champ à modifier :</label>
-<select id="champ" name="champ" onchange="verifieDate">
+<select id="champ" name="champ" onchange="verifieChamp()">
                 <option value="nom">Nom</option>
                 <option value="prenom">Prénom</option>
                 <option value="nomDeScene">Nom de scène</option>
@@ -144,7 +221,13 @@ function searchByName() {
                 <option value="styleMusical">Style musical</option>
               </select>
 <label for="modification">Modification : </label>
-<input type="text" id="modification" name="modification" required>             
+<input type="text" id="modification" name="modification" required>    
+<select id="styleDeMusique" name="styleDeMusique" style="display: none;">
+    <option value="Electro">Electro</option>
+    <option value="House">House</option>
+    <option value="Hard_style">Hard style</option>
+    <option value="EDM">EDM</option>
+</select>         
 <input type="submit" value="Modifier ce DJ">
 </form>
 

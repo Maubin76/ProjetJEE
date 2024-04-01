@@ -14,8 +14,11 @@ import com.google.gson.GsonBuilder;
 import Models.DJ;
 import Models.StyleMusical;
 import Queries.*;
+import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.*;
+import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.core.Response;
 
 @Path("/dj-management")
 public class DJController {
@@ -105,16 +108,25 @@ public class DJController {
 		@Path("/modifier")
 		@Consumes("application/x-www-form-urlencoded")
 
-		public void modifyDJs(@FormParam("nomDeSceneDJ") String nomDeSceneDJ,
+		public void modifyDJs(/*@Context HttpServletResponse response,*/@FormParam("nomDeSceneDJ") String nomDeSceneDJ,
 				@FormParam("champ") String champ,
-				@FormParam("modification") String modification) {
-			System.out.println(champ);
+				@FormParam("modification") String modification,
+				@FormParam("styleDeMusique") String style) {
 			List<DJ> djs;
 			djs = djDao.findByNomDeScene(nomDeSceneDJ);
 			Iterator<DJ> iterateur = djs.iterator();
-			while (iterateur.hasNext()){
-				DJ djactuel= iterateur.next();
-				djDao.modifyDJ(djactuel,champ,modification);
+			if(champ.equals("styleMusical")) {
+				while (iterateur.hasNext()){
+					DJ djactuel= iterateur.next();
+					djDao.modifyDJ(djactuel,champ,style);
+				}
 			}
+			else {
+				while (iterateur.hasNext()){
+					DJ djactuel= iterateur.next();
+					djDao.modifyDJ(djactuel,champ,modification);
+				}
+			}
+			//return Response.status(Response.Status.OK).entity("Changement effectué").build();
 		}
 }
