@@ -72,7 +72,6 @@ public class EventController {
     }
     
     @GET
-    @Path("/events")
     @Produces(MediaType.APPLICATION_JSON)
     public String getEvents() {
     	Date dateMin = new Date(System.currentTimeMillis()); // Date d'aujourd'hui

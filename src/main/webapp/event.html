@@ -23,8 +23,16 @@ margin-top: 10px;}
     <title>Event</title>
 
 <script>
-function loadEvents(url) {
-	fetch(url)
+function loadEvents() {
+	var url = "/ProjetJEE/api/event-management";
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			method:"GET"
+	};
+	
+	fetch(url, HTTPrequest)
 	.then(response => response.json())
 	.then(response => process(response))
 	.catch(error => alert("Erreur : " + error));
@@ -85,7 +93,7 @@ function process(events) {
 
 </script>
 </head>
-<body onload="loadEvents('/ProjetJEE/api/event-management/events')">
+<body onload="loadEvents()">
 
 <center>
 <h1>Liste des events</h1>
