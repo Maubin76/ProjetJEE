@@ -21,7 +21,6 @@ public class ClubController {
 	
 	@GET
 	@Produces(MediaType.APPLICATION_JSON)
-	@Path("/clubs")
 	public String getClubss() {
 		List<Lieu> clubs;
 		clubs = clubDao.findByAll();
