@@ -1,13 +1,15 @@
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<!-- Lien vers les styles CSS -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+<!-- Lien vers un fichier de style local -->
 <link rel="stylesheet" type="text/css" href="style.css">
 
 <style>
+/* Définition des styles CSS */
 table, th, td {
   border: 1px solid;
   padding:5px;
@@ -18,31 +20,35 @@ table {
 div {
 margin-top: 10px;}
 </style>
+<!-- Script JavaScript -->
 <script charset="ISO-8859-1">
+// Fonction pour charger les DJs depuis une URL
 function loadDJs(url) {
-	
+	// Configuration de la requête HTTP
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
 			},
 			method:"GET"
 	};
-	
+	// Récupération des DJs depuis l'URL spécifiée
 	fetch(url, HTTPrequest)
 	.then(response => response.json())
-	.then(response => process(response))
+	.then(response => process(response)) // Traitement des DJs
 	.catch(error => alert("Erreur : " + error));
 }
 
+// Fonction pour traiter la réponse des DJs et les afficher dans un tableau
 function process(djs) {
 	var djlist = document.getElementById("djlist");
-	
+	// Suppression des éléments enfants de la liste des DJs
 	if (djlist.hasChildNodes()) {
 		djlist.removeChild(djlist.firstChild);
 	}
-	
+	// Création d'un tableau pour afficher les DJs
 	var table = document.createElement("table");
 	djlist.appendChild(table);
+	// Création de l'en-tête du tableau
 	var thead = document.createElement("thead");
 	var trHead = document.createElement("tr");
 	trHead.innerHTML = "<th class='column-header'>Nom</th>" +
@@ -53,10 +59,9 @@ function process(djs) {
 	                   "<th class='column-header'>Style de musique</th>";
 	thead.appendChild(trHead);
 	table.appendChild(thead);
+	// Parcours des DJs pour les afficher dans le tableau
 	for (var dj of djs) {
-		console.log(dj);
 		var tr = document.createElement("tr");
-		
 		var td_nom = document.createElement("td");
 		td_nom.append(dj.nom);
 		var td_prenom = document.createElement("td");
@@ -76,19 +81,15 @@ function process(djs) {
 		tr.appendChild(td_lieuDeResidence);
 		tr.appendChild(td_styleMusical);
 		table.appendChild(tr);
-		
-		
 	}
 }
-
-
-
 </script>
 <title>Liste des DJs</title></head>
 <body onload="loadDJs('/ProjetJEE/api/dj-management')">
-
+<!-- Centre le contenu et affiche le titre -->
 <center>
 <h1>Liste des DJs</h1>
+<!-- Liens vers d'autres pages -->
 <a href="">
         <button>DJ</button>
 </a>
@@ -101,18 +102,16 @@ function process(djs) {
 </center></br>
 
 <div class="main-container-jee" style="margin:2%;">
+<!-- Div pour afficher la liste des DJs -->
 <div id="djlist"></div>
-
+<!-- Boutons pour les actions -->
 <a href="modification.html">
      <button>Modifier la liste</button>
 </a> 
-
 <a href="ajout.html">
         <button>Ajouter un DJ</button>
 </a>
 </div>
-
-	
 
 </body>
 </html>

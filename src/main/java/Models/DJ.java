@@ -11,6 +11,7 @@ public class DJ {
     private Date dateDeNaissance;
     private String lieuDeResidence;
     private StyleMusical styleMusical;
+    private int nombreEvenements;
 
     public DJ() {}
     
@@ -91,6 +92,10 @@ public class DJ {
 		return "DJ [id=" + id + ", nom=" + nom + ", prenom=" + prenom + ", nomDeScene=" + nomDeScene
 				+ ", dateDeNaissance=" + dateDeNaissance + ", lieuDeResidence=" + lieuDeResidence + ", styleMusical="
 				+ styleMusical + "]";
+	}
+	
+	public void ajoutEvent() {
+		this.nombreEvenements+=1;
 	}
     
 }

@@ -1,12 +1,13 @@
-
+<!DOCTYPE html>
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<!-- Lien vers les fichiers de style -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
+<!-- Définition des styles CSS internes -->
 <style>
 table, th, td {
   border: 1px solid;
@@ -23,23 +24,29 @@ margin-top: 10px;}
     <title>Event</title>
 
 <script>
+// Fonction pour charger les événements depuis une URL
 function loadEvents(url) {
+	// Effectue une requête GET pour récupérer les événements au format JSON
 	fetch(url)
 	.then(response => response.json())
-	.then(response => process(response))
+	.then(response => process(response)) // Appelle la fonction de traitement avec les données récupérées
 	.catch(error => alert("Erreur : " + error));
 }
 
-
+// Fonction pour traiter les événements récupérés
 function process(events) {
     var eventlist = document.getElementById("eventlist");
 
+    // Supprime tout contenu précédent dans la liste des événements
     if (eventlist.hasChildNodes()) {
         eventlist.removeChild(eventlist.firstChild);
     }
 
+    // Crée un tableau pour afficher les événements
     var table = document.createElement("table");
     eventlist.appendChild(table);
+
+    // Crée l'en-tête du tableau
     var thead = document.createElement("thead");
     var trHead = document.createElement("tr");
     trHead.innerHTML = "<th class='column-header'>Nom</th>" +
@@ -50,6 +57,8 @@ function process(events) {
                        "<th class='column-header'>Horaire de fin</th>";
     thead.appendChild(trHead);
     table.appendChild(thead);
+
+    // Parcourt les événements et les affiche dans le tableau
     for (var event of events) {
         var tr = document.createElement("tr");
         var td_nom = document.createElement("td");
@@ -64,7 +73,7 @@ function process(events) {
         td_horaireDebut.textContent = event.horaireDebut;
         var td_horaireFin = document.createElement("td");
         td_horaireFin.textContent = event.horaireFin;
-		
+
         tr.appendChild(td_nom);
         tr.appendChild(td_dj);
         tr.appendChild(td_lieu);
@@ -72,23 +81,21 @@ function process(events) {
         tr.appendChild(td_horaireDebut);
         tr.appendChild(td_horaireFin);
 
+        table.appendChild(tr);
+
         var td_action = document.createElement("td");
         var form = document.createElement("form");
-        
 
         table.appendChild(tr);
     }
 }
-
-
-
-
 </script>
 </head>
 <body onload="loadEvents('/ProjetJEE/api/event-management/events')">
-
+<!-- Centre le contenu et affiche le titre -->
 <center>
 <h1>Liste des events</h1>
+<!-- Liens vers d'autres pages -->
 <a href="index.html">
         <button>DJ</button>
 </a>
@@ -99,18 +106,18 @@ function process(events) {
         <button>Clubs</button>
 </a>
 </center></br>
+<!-- Conteneur principal avec une marge de 2% -->
 <div class="main-container-jee" style="margin:2%;">
-
-    <table border="1">
-
-    </table>
-<div id="eventlist"></div>
-<h2>Assigner un dj à un evenement</h2>
-<form action="/ProjetJEE/api/event-management/ajoute" method="post">
-<div>DJ : <input type="text" name="dj"></div>
-<div>Evenement : <input type="text" name="evenement"></div>
-<input type="submit" value="Ajouter">
-</form>
+    <!-- Div pour afficher la liste des événements -->
+    <div id="eventlist"></div>
+    <!-- Formulaire pour ajouter un DJ à un événement -->
+    <h2>Assigner un DJ à un événement</h2>
+    <form action="/ProjetJEE/api/event-management/ajoute" method="post">
+        <div>DJ : <input type="text" name="dj"></div>
+        <div>Evenement : <input type="text" name="evenement"></div>
+        <input type="submit" value="Ajouter">
+    </form>
 </div>
 </body>
 </html>
+

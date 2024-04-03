@@ -1,4 +1,3 @@
-
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
@@ -7,6 +6,7 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
+<!-- Définition des styles CSS -->
 <style>
 table, th, td {
   border: 1px solid;
@@ -18,136 +18,85 @@ table {
 div {
 margin-top: 10px;}
 </style>
+
+<!-- Script JavaScript -->
 <script charset="ISO-8859-1">
+// Fonction pour charger les DJs depuis une URL
 function loadDJs(url) {
-	fetch(url)
-	.then(response => response.json())
-	.then(response => process(response))
-	.catch(error => alert("Erreur : " + error));
+    fetch(url)
+    .then(response => response.json())
+    .then(response => process(response))
+    .catch(error => alert("Erreur : " + error));
 }
 
+// Fonction pour traiter la réponse des DJs et les afficher sous la forme d'un tableau
 var nomDeScene;
 function process(djs) {
-	nomDeScene=""
-	if (djs!=null){
-		var djlist = document.getElementById("djlist");
-	
-		if (djlist.hasChildNodes()) {
-			djlist.removeChild(djlist.firstChild);
-		}
-	
-		var table = document.createElement("table");
-		djlist.appendChild(table);
-		var thead = document.createElement("thead");
-		var trHead = document.createElement("tr");
-		trHead.innerHTML = "<th class='column-header'>Nom</th>" +
-        			   "<th class='column-header'>Prénom</th>" +
-	                   "<th class='column-header'>Nom de scène</th>" +
-	                   "<th class='column-header'>Date de naissance</th>" +
-	                   "<th class='column-header'>Lieu de résidence</th>" +
-	                   "<th class='column-header'>Style de musique</th>";
-		thead.appendChild(trHead);
-		table.appendChild(thead);
-		for (var dj of djs) {
-			console.log(dj);
-			var tr = document.createElement("tr");
-			var td_nom = document.createElement("td");
-			td_nom.append(dj.nom);
-			var td_prenom = document.createElement("td");
-			td_prenom.append(dj.prenom);
-			var td_nomDeScene = document.createElement("td");
-			td_nomDeScene.append(dj.nomDeScene);
-			var td_dateDeNaissance = document.createElement("td");
-			td_dateDeNaissance.append(dj.dateDeNaissance);
-			var td_lieuDeResidence = document.createElement("td");
-			td_lieuDeResidence.append(dj.lieuDeResidence);
-			var td_styleMusical = document.createElement("td");
-			td_styleMusical.append(dj.styleMusical);
-			tr.appendChild(td_nom);
-			tr.appendChild(td_prenom);
-			tr.appendChild(td_nomDeScene);
-			tr.appendChild(td_dateDeNaissance);
-			tr.appendChild(td_lieuDeResidence);
-			tr.appendChild(td_styleMusical);
-			table.appendChild(tr);
-			nomDeScene=dj.nomDeScene;
-			}
-		var champModifier = document.getElementById("nomDeSceneDJ")
-		champModifier.value=nomDeScene
-		var champSupprimer=document.getElementById("nomDeSceneDJSupprimer")
-		champSupprimer.value=nomDeScene
-		}
-}
-
-function searchByName() {
-	var name = document.getElementById("input_name").value;
-	var url = '/ProjetJEE/api/dj-management?name=' + encodeURIComponent(name);
-	var HTTPrequest = {
-			headers:{
-				"content-type":"application/json;"
-			},
-			method:"GET"
-	};
-	loadDJs(url, HTTPrequest);
-}
-
-/*document.getElementById("modifyForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
-
-    // Envoyer la requête AJAX
-    var formData = new FormData(this);
-
-    fetch(this.action, {
-        method: this.method,
-        body: formData
-    })
-    .then(response => {
-        if (!response.ok) {
-            throw new Error('Erreur réseau');
+    nomDeScene=""
+    if (djs!=null){
+        var djlist = document.getElementById("djlist");
+    
+        if (djlist.hasChildNodes()) {
+            djlist.removeChild(djlist.firstChild);
         }
-        document.getElementById("responseMessage").innerHTML = 'a';
-    })
-    .then(data => {
-        // Afficher la réponse de la requête dans la div responseMessage
-        document.getElementById("responseMessage").innerHTML = data;
-    })
-    .catch(error => {
-        console.error('Erreur:', error);
-        document.getElementById("responseMessage").innerHTML = "Une erreur s'est produite lors du traitement de la demande.";
-    });
-});
+    
+        var table = document.createElement("table");
+        djlist.appendChild(table);
+        var thead = document.createElement("thead");
+        var trHead = document.createElement("tr");
+        trHead.innerHTML = "<th class='column-header'>Nom</th>" +
+                           "<th class='column-header'>Prénom</th>" +
+                           "<th class='column-header'>Nom de scène</th>" +
+                           "<th class='column-header'>Date de naissance</th>" +
+                           "<th class='column-header'>Lieu de résidence</th>" +
+                           "<th class='column-header'>Style de musique</th>";
+        thead.appendChild(trHead);
+        table.appendChild(thead);
+        for (var dj of djs) {
+            console.log(dj);
+            var tr = document.createElement("tr");
+            var td_nom = document.createElement("td");
+            td_nom.append(dj.nom);
+            var td_prenom = document.createElement("td");
+            td_prenom.append(dj.prenom);
+            var td_nomDeScene = document.createElement("td");
+            td_nomDeScene.append(dj.nomDeScene);
+            var td_dateDeNaissance = document.createElement("td");
+            td_dateDeNaissance.append(dj.dateDeNaissance);
+            var td_lieuDeResidence = document.createElement("td");
+            td_lieuDeResidence.append(dj.lieuDeResidence);
+            var td_styleMusical = document.createElement("td");
+            td_styleMusical.append(dj.styleMusical);
+            tr.appendChild(td_nom);
+            tr.appendChild(td_prenom);
+            tr.appendChild(td_nomDeScene);
+            tr.appendChild(td_dateDeNaissance);
+            tr.appendChild(td_lieuDeResidence);
+            tr.appendChild(td_styleMusical);
+            table.appendChild(tr);
+            nomDeScene=dj.nomDeScene;
+            }
+        var champModifier = document.getElementById("nomDeSceneDJ")
+        champModifier.value=nomDeScene
+        var champSupprimer=document.getElementById("nomDeSceneDJSupprimer")
+        champSupprimer.value=nomDeScene
+        }
+}
 
-/*function deleteDJ(){
-	var url ="/ProjetJEE/api/dj-management/supprimer?nom="+nomDeScene;
-	fetch(url);
-}*/
+// Fonction pour effectuer une recherche par nom de DJ
+function searchByName() {
+    var name = document.getElementById("input_name").value;
+    var url = '/ProjetJEE/api/dj-management?name=' + encodeURIComponent(name);
+    var HTTPrequest = {
+            headers:{
+                "content-type":"application/json;"
+            },
+            method:"GET"
+    };
+    loadDJs(url, HTTPrequest);
+}
 
-/*function modifierDJ(){
-	var champ= document.getElementById("champ").value;
-	var modification = document.getElementById("modification").value;
-	var url ="/ProjetJEE/api/dj-management/modifier?nom="+nomDeScene+"&champ="+champ+"&modification="+modification;
-	fetch(url);
-}*/
-
-/*document.getElementById("modifyForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // Empêche le formulaire de soumettre normalement
-	
-    var form = event.target;
-    var formData = new FormData(form);
-	console.log("Test");
-    fetch(form.action, {
-        method: "POST",
-        body: formData
-    })
-    .then(response => response.text())
-    .then(data => {
-        document.getElementById("responseDiv").innerHTML = data; // Met à jour le contenu du div avec la réponse
-    })
-    .catch(error => {
-        console.error('Erreur lors de la soumission du formulaire:', error);
-    });
-});*/
-
+// Fonction pour vérifier le champ sélectionné
 function verifieChamp() {
     var selectBox = document.getElementById("champ");
     var selectedValue = selectBox.options[selectBox.selectedIndex].value;
@@ -156,11 +105,11 @@ function verifieChamp() {
 
     // Cache ou affiche le sélecteur de style musical selon la sélection
     if(selectedValue === "styleMusical") {
-    	inputElement.required=false;
+        inputElement.required=false;
         inputElement.style.display = "none";
         styleSelect.style.display = "block";
     } else {
-    	inputElement.required=true;
+        inputElement.required=true;
         inputElement.style.display = "block";
         styleSelect.style.display = "none";
     }
@@ -180,13 +129,13 @@ function verifieChamp() {
             break;
     }
 }
-
 </script>
 <title>Modification DJs</title>
 </head>
 <body>
 <center>
 <h1>Modification des DJs</h1>
+<!-- Liens vers d'autres pages -->
 <a href="index.html">
         <button>DJ</button>
 </a>
@@ -197,14 +146,14 @@ function verifieChamp() {
         <button>Clubs</button>
 </a>
 </center></br>
+<!-- Formulaire de recherche de DJ par nom -->
 <div class="main-container-jee" style="margin:2%;">
 <input type="text" id="input_name">
-
-    <!-- Boutons -->
-    <button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
+<button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
  <h1>DJ Correspondant</h1>
  <div id="djlist"></div>   
 <br> 
+<!-- Formulaire pour modifier un DJ -->
 <form id="modifyForm" action="/ProjetJEE/api/dj-management/modifier" method="post">
 <h3>Nom de scene du DJ a modifier</h3>
 <input type="text" id="nomDeSceneDJ" name="nomDeSceneDJ" readonly required>             
@@ -230,10 +179,10 @@ function verifieChamp() {
 <input type="submit" value="Modifier ce DJ">
 </form>
 
-<form action="/ProjetJEE/api/dj-management/supprimer" method="post">
+<!-- Formulaire pour supprimer un DJ -->
+<form action="/ProjetJEE/api/dj-management/supprimer" method="patch">
 <input type="hidden" id="nomDeSceneDJSupprimer" name="nomDeSceneDJSupprimer" readonly required>
 <input type="submit" value="Supprimer ce DJ">     
-
 </form>
  </div>
 </body>

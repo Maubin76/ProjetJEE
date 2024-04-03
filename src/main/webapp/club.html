@@ -1,10 +1,13 @@
+<!DOCTYPE html>
 <html>
+<head>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<!-- Lien vers les fichiers de style -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
 
+<!-- Définition des styles CSS internes -->
 <style>
 table, th, td {
   border: 1px solid;
@@ -16,29 +19,38 @@ table {
 div {
 margin-top: 10px;}
 </style>
-<html>
+
+<!-- Définition de l'en-tête de la page -->
 <head>
     <meta charset="ISO-8859-1">
     <title>Event</title>
 </head>
+
+<!-- Script JavaScript -->
 <script charset="ISO-8859-1">
+// Fonction pour charger les clubs depuis une URL
 function loadEvents(url) {
+	// Effectue une requête GET pour récupérer les clubs au format JSON
 	fetch(url)
 	.then(response => response.json())
-	.then(response => process(response))
+	.then(response => process(response)) // Appelle la fonction de traitement avec les données récupérées
 	.catch(error => alert("Erreur : " + error));
 }
 
-
+// Fonction pour traiter les clubs récupérés
 function process(clubs) {
 	var clublist = document.getElementById("clublist");
 	
+	// Supprime tout contenu précédent dans la liste des clubs
 	if (clublist.hasChildNodes()) {
 		clublist.removeChild(djlist.firstChild);
 	}
 	
+	// Crée un tableau pour afficher les clubs
 	var table = document.createElement("table");
 	clublist.appendChild(table);
+	
+	// Crée l'en-tête du tableau
 	var thead = document.createElement("thead");
 	var trHead = document.createElement("tr");
 	trHead.innerHTML = "<th class='column-header'>Nom</th>" +
@@ -47,6 +59,8 @@ function process(clubs) {
 	                   "<th class='column-header'>Continent</th>";
 	thead.appendChild(trHead);
 	table.appendChild(thead);
+	
+	// Parcourt les clubs et les affiche dans le tableau
 	for (var club of clubs) {
 		var tr = document.createElement("tr");
 		
@@ -63,18 +77,17 @@ function process(clubs) {
 		tr.appendChild(td_pays);
 		tr.appendChild(td_continent);
 		table.appendChild(tr);
-		
-		
 	}
 }
-
-
-
 </script>
+</head>
+
+<!-- Corps de la page -->
 <body onload="loadEvents('/ProjetJEE/api/club-management/clubs')">
 	
 <center>
 <h1>Liste des clubs</h1>
+<!-- Liens vers d'autres pages -->
 <a href="index.html">
         <button>DJ</button>
 </a>
@@ -85,12 +98,11 @@ function process(clubs) {
         <button>Clubs</button>
 </a>
 </center></br>
+
+<!-- Conteneur principal avec une marge de 2% -->
 <div class="main-container-jee" style="margin:2%;">
-
-    <table border="1">
-
-    </table>
-<div id="clublist"></div>
+    <!-- Div pour afficher la liste des clubs -->
+    <div id="clublist"></div>
 </div>
 </body>
 </html>
