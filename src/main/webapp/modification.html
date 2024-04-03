@@ -1,7 +1,7 @@
 
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
-
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
@@ -18,8 +18,7 @@ table {
 div {
 margin-top: 10px;}
 </style>
-<meta charset="UTF-8">
-<script>
+<script charset="ISO-8859-1">
 function loadDJs(url) {
 	fetch(url)
 	.then(response => response.json())
@@ -42,10 +41,10 @@ function process(djs) {
 		var thead = document.createElement("thead");
 		var trHead = document.createElement("tr");
 		trHead.innerHTML = "<th class='column-header'>Nom</th>" +
-        			   "<th class='column-header'>PrÃ©nom</th>" +
-	                   "<th class='column-header'>Nom de scÃ¨ne</th>" +
+        			   "<th class='column-header'>Prénom</th>" +
+	                   "<th class='column-header'>Nom de scène</th>" +
 	                   "<th class='column-header'>Date de naissance</th>" +
-	                   "<th class='column-header'>Lieu de rÃ©sidence</th>" +
+	                   "<th class='column-header'>Lieu de résidence</th>" +
 	                   "<th class='column-header'>Style de musique</th>";
 		thead.appendChild(trHead);
 		table.appendChild(thead);
@@ -93,9 +92,9 @@ function searchByName() {
 }
 
 /*document.getElementById("modifyForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // EmpÃªcher l'envoi du formulaire par dÃ©faut
+    event.preventDefault(); // Empêcher l'envoi du formulaire par défaut
 
-    // Envoyer la requÃªte AJAX
+    // Envoyer la requête AJAX
     var formData = new FormData(this);
 
     fetch(this.action, {
@@ -104,12 +103,12 @@ function searchByName() {
     })
     .then(response => {
         if (!response.ok) {
-            throw new Error('Erreur rÃ©seau');
+            throw new Error('Erreur réseau');
         }
         document.getElementById("responseMessage").innerHTML = 'a';
     })
     .then(data => {
-        // Afficher la rÃ©ponse de la requÃªte dans la div responseMessage
+        // Afficher la réponse de la requête dans la div responseMessage
         document.getElementById("responseMessage").innerHTML = data;
     })
     .catch(error => {
@@ -131,7 +130,7 @@ function searchByName() {
 }*/
 
 /*document.getElementById("modifyForm").addEventListener("submit", function(event) {
-    event.preventDefault(); // EmpÃªche le formulaire de soumettre normalement
+    event.preventDefault(); // Empêche le formulaire de soumettre normalement
 	
     var form = event.target;
     var formData = new FormData(form);
@@ -142,7 +141,7 @@ function searchByName() {
     })
     .then(response => response.text())
     .then(data => {
-        document.getElementById("responseDiv").innerHTML = data; // Met Ã  jour le contenu du div avec la rÃ©ponse
+        document.getElementById("responseDiv").innerHTML = data; // Met à jour le contenu du div avec la réponse
     })
     .catch(error => {
         console.error('Erreur lors de la soumission du formulaire:', error);
@@ -155,7 +154,7 @@ function verifieChamp() {
     var inputElement = document.getElementById("modification");
     var styleSelect = document.getElementById("styleDeMusique");
 
-    // Cache ou affiche le sÃ©lecteur de style musical selon la sÃ©lection
+    // Cache ou affiche le sélecteur de style musical selon la sélection
     if(selectedValue === "styleMusical") {
     	inputElement.required=false;
         inputElement.style.display = "none";
@@ -211,13 +210,13 @@ function verifieChamp() {
 <input type="text" id="nomDeSceneDJ" name="nomDeSceneDJ" readonly required>             
 <br>
 <br>
-<label for="champ">Champ Ã  modifier :</label>
+<label for="champ">Champ à modifier :</label>
 <select id="champ" name="champ" onchange="verifieChamp()">
                 <option value="nom">Nom</option>
-                <option value="prenom">PrÃ©nom</option>
-                <option value="nomDeScene">Nom de scÃ¨ne</option>
+                <option value="prenom">Prénom</option>
+                <option value="nomDeScene">Nom de scène</option>
                 <option value="dateDeNaissance">Date de naissance</option>
-                <option value="lieuDeResidence">Lieu de rÃ©sidence</option>
+                <option value="lieuDeResidence">Lieu de résidence</option>
                 <option value="styleMusical">Style musical</option>
               </select>
 <label for="modification">Modification : </label>

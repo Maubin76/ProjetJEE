@@ -1,4 +1,7 @@
-<!DOCTYPE html>
+
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
 <!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
@@ -15,11 +18,10 @@ table {
 div {
 margin-top: 10px;}
 </style>
-<html>
-<head>
+
     <meta charset="ISO-8859-1">
     <title>Event</title>
-</head>
+
 <script>
 function loadEvents(url) {
 	fetch(url)
@@ -82,8 +84,9 @@ function process(events) {
 
 
 </script>
+</head>
 <body onload="loadEvents('/ProjetJEE/api/event-management/events')">
-	
+
 <center>
 <h1>Liste des events</h1>
 <a href="index.html">
