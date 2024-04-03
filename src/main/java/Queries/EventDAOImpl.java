@@ -57,7 +57,7 @@ public class EventDAOImpl extends EventDAO {
 		
 		ResultSet rs = null;
 		try {
-			rs = statement.executeQuery("SELECT * FROM Events WHERE nomDeScene = '" + _nom + "'");
+			rs = statement.executeQuery("SELECT * FROM Events WHERE nom = '" + _nom + "'");
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -70,17 +70,21 @@ public class EventDAOImpl extends EventDAO {
 				Date date = rs.getDate("date");
 				Time horaireDebut = rs.getTime("horaireDebut");
 				Time horaireFin = rs.getTime("horaireFin");
-				
-				// On crée un DJDAO pour aller chercher le DJ via son id
-				DJDAO djdao = new DJDAOImpl();
-				DJ dj = djdao.findByID(UUID.fromString(djID));
-				// On crée un ClubDAO pour aller chercher le club via le nom
 				ClubDAO clubdao = new ClubDAOImpl();
 				Lieu lieu = clubdao.findByName(lieuNom);
+				// On crée un DJDAO pour aller chercher le DJ via son id
+				DJDAO djdao = new DJDAOImpl();
+				if (djID!=null) {
+					DJ dj = djdao.findByID(UUID.fromString(djID));
+					Event event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
+					resultList.add(event);
+				}
+				// On crée un ClubDAO pour aller chercher le club via le nom
+				else {
+					Event event = new Event(nom, null, lieu, date, horaireDebut, horaireFin);
+					resultList.add(event);
+				}
 				
-				Event event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
-				
-				resultList.add(event);
 			}
 		} catch (SQLException e) {
 			// TODO Auto-generated catch block
@@ -310,21 +314,22 @@ public class EventDAOImpl extends EventDAO {
 		List<Lieu> listeClubs = clubdao.findByAll();
 		Lieu lieu5 = listeClubs.get(4);
 		
-		Date date5 = Date.valueOf(LocalDate.now().plusDays(92));
+		Date date5 = Date.valueOf(LocalDate.now().plusDays(20));
 		
 		Time horaireDebut5 = Time.valueOf(LocalTime.of(16, 0));
 		
 		Time horaireFin5 = Time.valueOf(LocalTime.of(23, 0));
 		
-		Event event5 = new Event("Event5" , null, lieu5, date5, horaireDebut5, horaireFin5);
+		Event event5 = new Event("Event6" , null, lieu5, date5, horaireDebut5, horaireFin5);
 		
 		EventDAO eventDAO = new EventDAOImpl();
 		
 		eventDAO.insertEventtoDB(event5);
-		*/
 		
 		
-		afficherEvent();
+		
+		afficherEvent();*/
+		
 	}
 	
 	private static void afficherEvent() {
