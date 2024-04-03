@@ -1,12 +1,12 @@
 
-<html>
 <head>
+<!-- Définition du type de contenu et de l'encodage -->
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<!-- Liaison avec la feuille de style externe -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-
+<!-- Définition de styles CSS internes -->
 <style>
 table, th, td {
   border: 1px solid;
@@ -23,8 +23,10 @@ margin-top: 10px;}
     <title>Event</title>
 
 <script>
+// Fonction pour charger les événements depuis une API
 function loadEvents() {
 	var url = "/ProjetJEE/api/event-management";
+	// Configuration de la requête HTTP
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
@@ -32,24 +34,28 @@ function loadEvents() {
 			method:"GET"
 	};
 	
+	// Envoi de la requête fetch pour récupérer les événements
 	fetch(url, HTTPrequest)
 	.then(response => response.json())
-	.then(response => process(response))
-	.catch(error => alert("Erreur : " + error));
+	.then(response => process(response)) // Appel de la fonction de traitement
+	.catch(error => alert("Erreur : " + error)); // Gestion des erreurs
 }
 
-
+// Fonction pour traiter les événements récupérés
 function process(events) {
     var eventlist = document.getElementById("eventlist");
 
+    // Suppression des enfants de la liste des événements s'il y en a
     if (eventlist.hasChildNodes()) {
         eventlist.removeChild(eventlist.firstChild);
     }
 
+    // Création d'un tableau pour afficher les événements
     var table = document.createElement("table");
     eventlist.appendChild(table);
     var thead = document.createElement("thead");
     var trHead = document.createElement("tr");
+    // Ajout des en-têtes de colonne
     trHead.innerHTML = "<th class='column-header'>Nom</th>" +
     				   "<th class='column-header'>DJ</th>" +
                        "<th class='column-header'>Lieu</th>" +
@@ -58,6 +64,7 @@ function process(events) {
                        "<th class='column-header'>Horaire de fin</th>";
     thead.appendChild(trHead);
     table.appendChild(thead);
+    // Parcours des événements pour les afficher dans le tableau
     for (var event of events) {
         var tr = document.createElement("tr");
         var td_nom = document.createElement("td");
@@ -73,6 +80,7 @@ function process(events) {
         var td_horaireFin = document.createElement("td");
         td_horaireFin.textContent = event.horaireFin;
 		
+        // Ajout des cellules de données à la ligne du tableau
         tr.appendChild(td_nom);
         tr.appendChild(td_dj);
         tr.appendChild(td_lieu);
@@ -80,6 +88,7 @@ function process(events) {
         tr.appendChild(td_horaireDebut);
         tr.appendChild(td_horaireFin);
 
+        // Création du formulaire pour chaque événement (à compléter)
         var td_action = document.createElement("td");
         var form = document.createElement("form");
         
@@ -87,14 +96,13 @@ function process(events) {
         table.appendChild(tr);
     }
 }
-
-
-
-
 </script>
 </head>
+
+<!-- Corps de la page -->
 <body onload="loadEvents()">
 
+<!-- Centrage du titre et des boutons -->
 <center>
 <h1>Liste des events</h1>
 <a href="index.html">
@@ -109,11 +117,14 @@ function process(events) {
 </center></br>
 <div class="main-container-jee" style="margin:2%;">
 
+    <!-- Tableau vide pour afficher les événements -->
     <table border="1">
 
     </table>
+<!-- Div pour afficher les événements récupérés -->
 <div id="eventlist"></div>
 <h2>Assigner un dj à un evenement</h2>
+<!-- Formulaire qui envoie les informations pour assigner un DJ à un événement via une requête -->
 <form action="/ProjetJEE/api/event-management/ajoute" method="post">
 <div>DJ : <input type="text" name="dj"></div>
 <div>Evenement : <input type="text" name="evenement"></div>
@@ -122,3 +133,4 @@ function process(events) {
 </div>
 </body>
 </html>
+

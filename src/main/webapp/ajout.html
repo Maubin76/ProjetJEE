@@ -1,78 +1,80 @@
-
 <html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
-<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
-
-<style>
-table, th, td {
-  border: 1px solid;
-  padding:5px;
-}
-table {
-  border-collapse: collapse;
-}
-div {
-margin-top: 10px;}
-</style>
-<meta charset="UTF-8">
-<script charset="ISO-8859-1">
-
-/*function ajoutDJ(){
-	var nom = document.getElementById("nom").value;
-	var prenom = document.getElementById("prenom").value;
-	var dateDeNaissance = document.getElementById("dateDeNaissance").value;
-	var nomDeScene = document.getElementById("nomDeScene").value;
-	var lieuDeResidence = document.getElementById("lieuDeResidence").value;
-	var styleDeMusique = document.getElementById("styleDeMusique").value;
-	var url ="/ProjetJEE/api/dj-management/ajout?nom="+nom+"&prenom="+prenom+"&dateDeNaissance="+dateDeNaissance+"&nomDeScene="+nomDeScene+"&lieuDeResidence="+lieuDeResidence+"&styleDeMusique="+styleDeMusique;
-	fetch(url);
-}*/
-
-
-</script>
-<title>Ajout de DJs</title>
+    <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+    <!-- Liens vers les feuilles de style externes -->
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+    
+    <!-- Styles CSS internes -->
+    <style>
+        table, th, td {
+            border: 1px solid;
+            padding: 5px;
+        }
+        table {
+            border-collapse: collapse;
+        }
+        div {
+            margin-top: 10px;
+        }
+    </style>
+    
+    <!-- Balise meta pour l'encodage -->
+    <meta charset="UTF-8">
+    
+    <!-- Balise title pour le titre de la page -->
+    <title>Ajout de DJs</title>
 </head>
 <body>
-<center>
-<h1>Ajouter un DJ</h1>
-<a href="index.html">
-        <button>DJ</button>
-</a>
-<a href="event.html">
-        <button>Prochains events</button>
-</a>
-<a href="club.html">
-        <button>Clubs</button>
-</a>
-</center></br>
-
-<div class="main-container-jee" style="margin:2%;">
-<form action="/ProjetJEE/api/dj-management/ajout" method="post">
-<label for="nom">Nom :</label>
-<input type="text" id="nom" name="nom" required>
-<label for="prenom">Prénom :</label>
-<input type="text" id="prenom" name="prenom" required>
-<label for="dateDeNaissance">Date de naissance (Il faut cliquer sur une date avant de modifier à la main))</label>
-<input type="date" id="dateDeNaissance" name="dateDeNaissance" required>
-<label for="nomDeScene">Nom de scène :</label>
-<input type="text" id="nomDeScene" name="nomDeScene" required>
-<label for="lieuDeResidence">Lieu de résidence :</label>
-<input type="text" id="lieuDeResidence" name="lieuDeResidence" required>
-<label for="styleDeMusique">Style Musical :</label>
-<select id="styleDeMusique" name="styleDeMusique">
+    <!-- Contenu principal de la page -->
+    <center>
+        <!-- Titre principal -->
+        <h1>Ajouter un DJ</h1>
+        
+        <!-- Boutons de navigation -->
+        <a href="index.html">
+            <button>DJ</button>
+        </a>
+        <a href="event.html">
+            <button>Prochains events</button>
+        </a>
+        <a href="club.html">
+            <button>Clubs</button>
+        </a>
+    </center>
+    <br />
+    
+    <!-- Formulaire pour ajouter un DJ -->
+    <div class="main-container-jee" style="margin:2%;">
+        <!-- Le formulaire envoie les données avec la méthode POST -->
+        <form action="/ProjetJEE/api/dj-management/ajout" method="post">
+            <label for="nom">Nom :</label>
+            <input type="text" id="nom" name="nom" required>
+            
+            <label for="prenom">Prénom :</label>
+            <input type="text" id="prenom" name="prenom" required>
+            
+            <label for="dateDeNaissance">Date de naissance :</label>
+            <input type="date" id="dateDeNaissance" name="dateDeNaissance" required>
+            
+            <label for="nomDeScene">Nom de scène :</label>
+            <input type="text" id="nomDeScene" name="nomDeScene" required>
+            
+            <label for="lieuDeResidence">Lieu de résidence :</label>
+            <input type="text" id="lieuDeResidence" name="lieuDeResidence" required>
+            
+            <label for="styleDeMusique">Style Musical :</label>
+            <select id="styleDeMusique" name="styleDeMusique">
                 <option value="1">Electro</option>
                 <option value="2">House</option>
                 <option value="3">Hard style</option>
                 <option value="4">EDM</option>
-              </select> 
-
-
-    <!-- Boutons -->
-<input type="submit" value="Ajouter ce DJ"> </form>
-</div>
+            </select> 
+            
+            <!-- Bouton de soumission du formulaire -->
+            <input type="submit" value="Ajouter ce DJ">
+        </form>
+    </div>
 </body>
 </html>

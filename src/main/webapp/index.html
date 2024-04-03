@@ -19,6 +19,7 @@ div {
 margin-top: 10px;}
 </style>
 <script charset="ISO-8859-1">
+// Fonction pour charger les DJs depuis une URL
 function loadDJs(url) {
 	
 	var HTTPrequest = {
@@ -28,23 +29,28 @@ function loadDJs(url) {
 			method:"GET"
 	};
 	
+	// Envoi de la requête fetch pour récupérer les DJs
 	fetch(url, HTTPrequest)
 	.then(response => response.json())
-	.then(response => process(response))
+	.then(response => process(response)) // Appel de la fonction de traitement
 	.catch(error => alert("Erreur : " + error));
 }
 
+// Fonction pour traiter les DJs récupérés
 function process(djs) {
 	var djlist = document.getElementById("djlist");
 	
+	// Suppression des enfants de la liste des DJs s'il y en a
 	if (djlist.hasChildNodes()) {
 		djlist.removeChild(djlist.firstChild);
 	}
 	
+	// Création d'un tableau pour afficher les DJs
 	var table = document.createElement("table");
 	djlist.appendChild(table);
 	var thead = document.createElement("thead");
 	var trHead = document.createElement("tr");
+	// Ajout des en-têtes de colonne
 	trHead.innerHTML = "<th class='column-header'>Nom</th>" +
 	                   "<th class='column-header'>Prénom</th>" +
 	                   "<th class='column-header'>Nom de scène</th>" +
@@ -53,10 +59,11 @@ function process(djs) {
 	                   "<th class='column-header'>Style de musique</th>";
 	thead.appendChild(trHead);
 	table.appendChild(thead);
+	// Parcours des DJs pour les afficher dans le tableau
 	for (var dj of djs) {
-		console.log(dj);
 		var tr = document.createElement("tr");
 		
+		// Création des cellules de données pour chaque DJ
 		var td_nom = document.createElement("td");
 		td_nom.append(dj.nom);
 		var td_prenom = document.createElement("td");
@@ -69,6 +76,8 @@ function process(djs) {
 		td_lieuDeResidence.append(dj.lieuDeResidence);
 		var td_styleMusical = document.createElement("td");
 		td_styleMusical.append(dj.styleMusical);
+		
+		// Ajout des cellules de données à la ligne du tableau
 		tr.appendChild(td_nom);
 		tr.appendChild(td_prenom);
 		tr.appendChild(td_nomDeScene);
@@ -76,18 +85,14 @@ function process(djs) {
 		tr.appendChild(td_lieuDeResidence);
 		tr.appendChild(td_styleMusical);
 		table.appendChild(tr);
-		
-		
 	}
 }
-
-
-
 </script>
 <title>Liste des DJs</title></head>
 <body onload="loadDJs('/ProjetJEE/api/dj-management')">
 
 <center>
+<!-- Titre principal et boutons de navigation -->
 <h1>Liste des DJs</h1>
 <a href="">
         <button>DJ</button>
@@ -100,9 +105,12 @@ function process(djs) {
 </a>
 </center></br>
 
+<!-- Conteneur principal avec marges -->
 <div class="main-container-jee" style="margin:2%;">
+<!-- Div pour afficher la liste des DJs -->
 <div id="djlist"></div>
 
+<!-- Liens pour modifier la liste et ajouter un DJ en allant sur les autres pages -->
 <a href="modification.html">
      <button>Modifier la liste</button>
 </a> 
@@ -111,8 +119,6 @@ function process(djs) {
         <button>Ajouter un DJ</button>
 </a>
 </div>
-
-	
 
 </body>
 </html>

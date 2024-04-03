@@ -1,9 +1,13 @@
 <html>
 <meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
-<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+
+<!-- Liens vers les feuilles de style externes -->
 <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+
+<!-- Styles CSS internes -->
 
 <style>
 table, th, td {
@@ -22,6 +26,8 @@ margin-top: 10px;}
     <title>Event</title>
 </head>
 <script charset="ISO-8859-1">
+<!-- Script JavaScript pour charger les événements -->
+
 function loadEvents() {
 	var url = "/ProjetJEE/api/club-management";
 	var HTTPrequest = {
@@ -37,14 +43,14 @@ function loadEvents() {
 	.catch(error => alert("Erreur : " + error));
 }
 
-
+// Fonction permettant de créer le tableau avec les clubs à l'intérieur
 function process(clubs) {
 	var clublist = document.getElementById("clublist");
-	
+    // Efface le contenu précédent s'il existe
 	if (clublist.hasChildNodes()) {
 		clublist.removeChild(djlist.firstChild);
 	}
-	
+    // Crée un tableau et ses en-têtes
 	var table = document.createElement("table");
 	clublist.appendChild(table);
 	var thead = document.createElement("thead");
@@ -55,6 +61,7 @@ function process(clubs) {
 	                   "<th class='column-header'>Continent</th>";
 	thead.appendChild(trHead);
 	table.appendChild(thead);
+    // Remplit le tableau avec les données des clubs
 	for (var club of clubs) {
 		var tr = document.createElement("tr");
 		
@@ -70,6 +77,7 @@ function process(clubs) {
 		tr.appendChild(td_ville);
 		tr.appendChild(td_pays);
 		tr.appendChild(td_continent);
+        // Ajoute le tableau à la page
 		table.appendChild(tr);
 		
 		
@@ -80,7 +88,8 @@ function process(clubs) {
 
 </script>
 <body onload="loadEvents()">
-	
+<!-- Centre le contenu et affiche les boutons de navigation -->
+
 <center>
 <h1>Liste des clubs</h1>
 <a href="index.html">
@@ -94,9 +103,11 @@ function process(clubs) {
 </a>
 </center></br>
 <div class="main-container-jee" style="margin:2%;">
+    <!-- Tableau pour afficher les clubs -->
 
     <table border="1">
-
+	<!-- L'intérieur du tableau sera rempli dynamiquement -->
+	
     </table>
 <div id="clublist"></div>
 </div>
