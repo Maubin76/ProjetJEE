@@ -14,19 +14,20 @@ import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 
+// Définition du chemin de base pour toutes les méthodes dans cette classe
 @Path("/club-management")
-
 public class ClubController {
-	private ClubDAO clubDao = new ClubDAOImpl();
-	
-	@GET
-	@Produces(MediaType.APPLICATION_JSON)
-	public String getClubss() {
-		List<Lieu> clubs;
-		clubs = clubDao.findByAll();
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		String json=gson.toJson(clubs);
-		return json;	
-	}
+    private ClubDAO clubDao = new ClubDAOImpl(); // Initialisation de l'objet ClubDAO avec l'implémentation ClubDAOImpl
+
+    // Endpoint pour récupérer la liste des clubs au format JSON
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    public String getClubss() {
+        List<Lieu> clubs; // Déclaration d'une liste de Lieu pour stocker les clubs
+        clubs = clubDao.findByAll(); // Récupération de tous les clubs depuis la base de données
+        GsonBuilder builder = new GsonBuilder(); // Création d'un constructeur GsonBuilder
+        Gson gson = builder.create(); // Création d'un objet Gson à partir du constructeur
+        String json = gson.toJson(clubs); // Conversion de la liste des clubs en JSON
+        return json; // Retourne la représentation JSON des clubs
+    }
 }
