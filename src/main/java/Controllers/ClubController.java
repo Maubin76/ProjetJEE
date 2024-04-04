@@ -36,15 +36,15 @@ public class ClubController {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.TEXT_PLAIN)
 	public String getClubs(@QueryParam("name") String ville) {
-		List<Lieu> clubs;
+		List<Lieu> clubs; // Déclaration d'une liste de Lieu pour stocker les clubs
 		if (ville!=null) {
-			clubs = clubDao.findByVille(ville);
+			clubs = clubDao.findByVille(ville);// Récupération des clubs selon le nom de ville
 		}else {
 			clubs = null;
 		}
-		GsonBuilder builder = new GsonBuilder();
-		Gson gson = builder.create();
-		String json=gson.toJson(clubs);
-		return json;	
+        GsonBuilder builder = new GsonBuilder(); // Création d'un constructeur GsonBuilder
+        Gson gson = builder.create(); // Création d'un objet Gson à partir du constructeur
+        String json = gson.toJson(clubs); // Conversion de la liste des clubs en JSON
+        return json; // Retourne la représentation JSON des clubs
 	}
 }
