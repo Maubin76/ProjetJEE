@@ -23,6 +23,18 @@ margin-top: 10px;}
     <title>Event</title>
 
 <script>
+//Fonction permettant de ne pas pouvoir mettre une date antérieur pour l'event
+document.addEventListener("DOMContentLoaded", function() {
+    // Récupération de l'élément input date
+    var inputDate = document.getElementById("dateEvent");
+
+    // Obtention de la date actuelle en format "YYYY-MM-DD"
+    var today = new Date().toISOString().split('T')[0];
+    
+    // Définir la date minimum à aujourd'hui
+    inputDate.setAttribute('min', today);
+  });
+  
 // Fonction pour charger les événements depuis une API. Utilisée au chargement de la page
 function loadEvents() {
 	var url = "/ProjetJEE/api/event-management";
@@ -205,11 +217,32 @@ function premierJourDuMois(dateString) {
   <button onclick="moisPrecedent()">Précédent</button>
   <button onclick="moisSuivant()">Suivant</button>
 <h2>Assigner un dj à un evenement</h2>
-<!-- Formulaire qui envoie les informations pour assigner un DJ à un événement via une requête -->
-<form action="/ProjetJEE/api/event-management/ajoute" method="post">
-<div>DJ : <input type="text" name="dj"></div>
-<div>Evenement : <input type="text" name="evenement"></div>
-<input type="submit" value="Ajouter">
+<!-- Div pour afficher les événements récupérés -->
+<div id="eventlist"></div>
+<a href="addDjEvent.html">
+     <button>Assigner un dj à un evenement</button>
+</a> 
+
+
+<!-- Formulaire qui envoie les informations pour créer un nouvel événement via une requête une utilisant la méthode POST -->
+<form action="/ProjetJEE/api/event-management/ajoutEvent" method="post">
+	<label for="nom">Nom :</label>
+    <input type="text" id="nomEvent" name="nomEvent" required>
+            
+   	<label for="prenom">Lieu :</label>
+	<input type="text" id="nomLieu" name="nomLieu" required>
+            
+	<label for="dateEvent">Date de l'événement :</label>
+	<input type="date" id="dateEvent" name="dateEvent" required>
+            
+	<label for="heureDebut">Horaire de début :</label>
+	<input type="time" id="heureDebut" name="heureDebut" required>
+            
+	<label for="heureFin">Horaire de fin :</label>
+	<input type="time" id="heureFin" name="heureFin" required>
+	<br>
+	<input type="submit" value="Ajouter cet event">
+    
 </form>
 </div>
 </body>
