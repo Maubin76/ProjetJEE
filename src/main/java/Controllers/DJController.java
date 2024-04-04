@@ -29,11 +29,12 @@ public class DJController {
     @Produces(MediaType.APPLICATION_JSON)
     public String getDjs() {
         List<DJ> djs;
-        djs = djDao.findByAll();
+        djs = djDao.findByAll();// Récupération des données de la base sous forme de liste
+        // Création du JSON qui va accueillir la réponse de la base
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         String json=gson.toJson(djs);
-        return json;    
+        return json; // Renvoie des données à la vue
     }
     
     // Endpoint pour récupérer les DJ par leur nom de scène en utilisant une requête avec paramètre Query
@@ -43,14 +44,15 @@ public class DJController {
     public String getDjs(@QueryParam("name") String nomScene) {
         List<DJ> djs;
         if (nomScene!=null) {
-            djs = djDao.findByNomDeScene(nomScene);
+            djs = djDao.findByNomDeScene(nomScene); // Récupération des données de la base sous forme de liste
         } else {
             djs = null;
         }
+        // Création du JSON qui va accueillir la réponse de la base
         GsonBuilder builder = new GsonBuilder();
         Gson gson = builder.create();
         String json=gson.toJson(djs);
-        return json;    
+        return json; // Renvoie des données à la vue
     }
     
     // Endpoint pour supprimer un DJ en utilisant une méthode POST avec des paramètres formulaire
@@ -59,11 +61,11 @@ public class DJController {
     @Path("/supprimer")
     public void deleteDJs(@FormParam("nomDeSceneDJSupprimer") String nomScene) {
         List<DJ> djs;
-        djs = djDao.findByNomDeScene(nomScene);
-        Iterator<DJ> iterateur = djs.iterator();
+        djs = djDao.findByNomDeScene(nomScene); // Récupération des données de la base sous forme de liste
+        Iterator<DJ> iterateur = djs.iterator(); // Itérateur de parcours de la liste
         while (iterateur.hasNext()){
             DJ djactuel= iterateur.next();
-            djDao.deleteFromDB(djactuel);
+            djDao.deleteFromDB(djactuel); // Suppression du DJ choisi
         }
     }
     
@@ -77,15 +79,17 @@ public class DJController {
             @FormParam("nomDeScene") String nomDeScene,
             @FormParam("lieuDeResidence") String lieuDeResidence,
             @FormParam("styleDeMusique") int styleDeMusique) {
-        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd"); // Format de la date utilisé
         Date dateNaissance = null;
         try {
+        	// Conversion du format de la date pour l'enregistrement dans la base de données
             java.util.Date utilDate = dateFormat.parse(dateDeNaissance);
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             dateNaissance = sqlDate;
         } catch (ParseException e) {
             e.printStackTrace();
         }
+        // Conversion du style musical String-Enum
         StyleMusical styleMusical = null;
         switch (styleDeMusique) {
             case 1:
@@ -101,8 +105,8 @@ public class DJController {
                 styleMusical=StyleMusical.EDM;
                 break;
         }
-        DJ dj= new DJ(nom,prenom,nomDeScene,dateNaissance,lieuDeResidence,styleMusical);
-        djDao.insertDJtoDB(dj);
+        DJ dj= new DJ(nom,prenom,nomDeScene,dateNaissance,lieuDeResidence,styleMusical); // Instanciation du DJ
+        djDao.insertDJtoDB(dj); // Ajout du DJ dans la base
     }
 
     // Endpoint pour modifier un DJ en utilisant une méthode POST avec des paramètres formulaire
@@ -114,14 +118,14 @@ public class DJController {
             @FormParam("modification") String modification,
             @FormParam("styleDeMusique") String style) {
         List<DJ> djs;
-        djs = djDao.findByNomDeScene(nomDeSceneDJ);
+        djs = djDao.findByNomDeScene(nomDeSceneDJ); // Récupération du DJ associé au nom de scène saisi
         Iterator<DJ> iterateur = djs.iterator();
-        if(champ.equals("styleMusical")) {
+        if(champ.equals("styleMusical")) { // Modification dans le cas du champ musical
             while (iterateur.hasNext()){
                 DJ djactuel= iterateur.next();
                 djDao.modifyDJ(djactuel,champ,style);
             }
-        } else {
+        } else { // Modification pour les autres champs
             while (iterateur.hasNext()){
                 DJ djactuel= iterateur.next();
                 djDao.modifyDJ(djactuel,champ,modification);

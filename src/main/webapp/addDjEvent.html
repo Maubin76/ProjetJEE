@@ -20,8 +20,9 @@ margin-top: 10px;}
 <script charset="ISO-8859-1">
 
 
-// Variable pour stocker le nom de scène du DJ
-var listeEvents=[];
+
+//Variable pour stocker le nom de scène du DJ
+var nomDeScene;
 
 //Fonction pour charger les événements depuis une API
 function loadEvents(url) {
@@ -93,12 +94,15 @@ function process(events) {
         
 
         table.appendChild(tr);
+        var champModifier = document.getElementById("nomDeSceneDJ")
+		champModifier.value = nomDeScene;
     }
 }
 
 // Fonction pour rechercher un DJ par son nom de scène
 function searchByName() {
 	var name = document.getElementById("input_name").value;
+	nomDeScene=name;
 	var url = '/ProjetJEE/api/event-management/eventDispo?name=' + encodeURIComponent(name);
 	loadEvents(url);
 }
@@ -121,14 +125,14 @@ function searchByName() {
         <button>Clubs</button>
 </a>
 </center></br>
+
 <div class="main-container-jee" style="margin:2%;">
 <!-- Champ de recherche par nom de scène -->
 <input type="text" id="input_name">
 <!-- Bouton de recherche -->
-<button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
+<button onclick="searchByName()">Rechercher les événements auxquels ce DJ peut s'inscrire</button>
 <!-- Titre pour la liste des DJs correspondants -->
-<h1>Events où le DJ peut s'inscrire</h1>
-<div id="djlist"></div>   
+<div id="eventlist"></div>   
 <br> 
 <!-- Formulaire qui envoie les informations pour assigner un DJ à un événement via une requête -->
 <form id="modifyForm" action="/ProjetJEE/api/event-management/ajoutDjEvent" method="post">
