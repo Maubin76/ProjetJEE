@@ -19,8 +19,6 @@ public abstract class EventDAO {
 	public abstract List<Event> findByDJ(DJ dj);
 	
 	public abstract void addDjtoEvent(DJ dj, Event event);
-	
-	public abstract List<Event> findByDJ(DJ dj);
 
 }
 
