@@ -132,6 +132,7 @@ public class EventController {
         if (dj != null && evenement != null && djAssigne == null) {
             eventDao.addDjtoEvent(dj, evenement); // Ajout du DJ à l'événement dans la base de données
         }
+        
     }
     
   //Endpoint pour ajouter un événement
@@ -177,13 +178,36 @@ public class EventController {
     @Path("/eventDispo")
     @Produces(MediaType.APPLICATION_JSON)
     public String getEventsDispo(@QueryParam("name") String nom) {
+    	// On récupère le dj dans la base de données
     	DJ dj =djDao.findByNomDeScene(nom).get(0);
+    	// On récupère la liste de tous les events sans DJ et de tous les events assigné au dj recherché
+    	List<Event> eventPossible=new ArrayList<>();
     	List<Event> eventLibre = new ArrayList<>();
 		eventLibre = eventDao.findByDJ(null);
 		List<Event> eventDJ = new ArrayList<>();
 		eventDJ=eventDao.findByDJ(dj);
 		List<EventJSON> eventListJSON=new ArrayList<>();
-		for (Event event : eventLibre) {
+		for (Event eventsLibre : eventLibre) {
+			Boolean disponible=true;
+			//Pour chaque event possible on vérifie que cela correspond bien avec les contraintes de temps
+			for (Event eventsDJ : eventDJ) {
+				if (eventsDJ.getLieu().getContinent().equals(eventsLibre.getLieu().getContinent())) {
+					if(addDays(eventsDJ.getDate(),2).compareTo(eventsLibre.getDate())>0) {
+						disponible=false;
+					}
+					
+				}else {
+					if(addDays(eventsDJ.getDate(),3).compareTo(eventsLibre.getDate())>0) {
+						disponible=false;
+					}
+				}
+			}
+			if(disponible) {
+				eventPossible.add(eventsLibre);
+			}
+		}
+		// On ajoute ensuite tous les events possible dans un format pour le json
+		for (Event event : eventPossible) {
         	if(event.getDj()==null) {
         		eventListJSON.add(new EventJSON(event.getNom(), "Pas de DJ pour cet event", event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
         	}else {
@@ -193,6 +217,7 @@ public class EventController {
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		String json=gson.toJson(eventListJSON);
+		// On retourne le json
 		return json;
 
     }

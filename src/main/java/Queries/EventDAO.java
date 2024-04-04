@@ -20,7 +20,6 @@ public abstract class EventDAO {
 	
 	public abstract void addDjtoEvent(DJ dj, Event event);
 	
-	public abstract List<Event> findByDJ(DJ nom);
 
 }
 
