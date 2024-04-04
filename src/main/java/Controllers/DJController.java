@@ -13,7 +13,6 @@ import Models.DJ;
 import Models.StyleMusical;
 import Queries.DJDAO;
 import Queries.DJDAOImpl;
-import jakarta.servlet.http.HttpServletResponse;
 import jakarta.ws.rs.*;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
