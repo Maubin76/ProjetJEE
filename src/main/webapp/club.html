@@ -48,7 +48,7 @@ function process(clubs) {
 	var clublist = document.getElementById("clublist");
     // Efface le contenu précédent s'il existe
 	if (clublist.hasChildNodes()) {
-		clublist.removeChild(djlist.firstChild);
+		clublist.removeChild(clublist.firstChild);
 	}
     // Crée un tableau et ses en-têtes
 	var table = document.createElement("table");
@@ -77,11 +77,25 @@ function process(clubs) {
 		tr.appendChild(td_ville);
 		tr.appendChild(td_pays);
 		tr.appendChild(td_continent);
-        // Ajoute le tableau à la page
-		table.appendChild(tr);
-		
-		
+
+		var element_recherche = document.getElementById("input_name").value;
+		if (element_recherche == "" 
+			|| element_recherche == club.nomLieu
+			|| element_recherche == club.ville
+			|| element_recherche == club.pays
+			|| element_recherche == club.continent
+		){
+			// Ajoute le tableau à la page
+			table.appendChild(tr);
+		}
 	}
+}
+
+//Fonction pour rechercher un club par le nom de sa ville
+function searchByVille() {
+	var name = document.getElementById("input_name").value;
+	var url = '/ProjetJEE/api/club-management?name=' + encodeURIComponent(name);
+	loadEvents(url, HTTPrequest);
 }
 
 
@@ -103,12 +117,18 @@ function process(clubs) {
 </a>
 </center></br>
 <div class="main-container-jee" style="margin:2%;">
-    <!-- Tableau pour afficher les clubs -->
+<!-- Tableau pour afficher les clubs -->
 
-    <table border="1">
-	<!-- L'intérieur du tableau sera rempli dynamiquement -->
+<table border="1">
+
+<!-- L'intérieur du tableau sera rempli dynamiquement -->
 	
-    </table>
+	<input type="text" id="input_name">
+	<!-- Boutons -->
+	<button onclick="loadEvents('/ProjetJEE/api/club-management/clubs')">Rechercher</button>
+	<h1>Clubs Correspondant</h1>
+ 
+</table>
 <div id="clublist"></div>
 </div>
 </body>
