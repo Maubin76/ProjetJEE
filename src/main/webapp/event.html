@@ -41,9 +41,12 @@ function loadEvents() {
 	.catch(error => alert("Erreur : " + error)); // Gestion des erreurs
 }
 
-let moisAffiche;
+let moisAffiche = null;
+let lastRecherche = "suivant";
 
 function moisSuivant(){
+	lastRecherche = "suivant";
+	moisAffiche = add1Month(moisAffiche);
 	console.log(moisAffiche);
 	var url = "/ProjetJEE/api/event-management/MoisSuivant?dateString="+moisAffiche;
 	var HTTPrequest = {
@@ -60,7 +63,10 @@ function moisSuivant(){
 }
 
 function moisPrecedent(){
-	var url = "/ProjetJEE/api/event-management/MoisPrecedent";
+	lastRecherche = "precedent"
+	moisAffiche = sub1Month(moisAffiche);
+	console.log(moisAffiche);
+	var url = "/ProjetJEE/api/event-management/MoisPrecedent?dateString="+moisAffiche;
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
@@ -98,14 +104,24 @@ function process(events) {
     thead.appendChild(trHead);
     table.appendChild(thead);
     
-    if (events.length==0){
-    	console.log("Aucun event affiché");
-    	moisAffiche = premierJourDuMois(add2Months(moisAffiche));
-    	console.log("Date mise à jour : " + moisAffiche);
-    }
-    else {
+    if (moisAffiche == null){
     	moisAffiche = premierJourDuMois(events[0].date);
+    	console.log(moisAffiche);
     }
+    
+    //if (events.length==0){
+    //	console.log("Aucun event affiché");
+    //	if (lastRecherche == "suivant"){
+    //		moisAffiche = premierJourDuMois(add2Months(moisAffiche));
+    //	}
+    //	else {
+    //		moisAffiche = premierJourDuMois(sub1Month(moisAffiche));
+    //	}
+    //	console.log("Date mise à jour : " + moisAffiche);
+    //}
+    //else {
+    //	moisAffiche = premierJourDuMois(events[0].date);
+    //}
     // Parcours des événements pour les afficher dans le tableau
     for (var event of events) {
         var tr = document.createElement("tr");
@@ -139,12 +155,12 @@ function process(events) {
     }
 }
 
-function add2Months(dateString) {
+function add1Month(dateString) {
     // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
     let date = new Date(dateString);
 
     // Ajoutez 60 jours à la date
-    date.setDate(date.getDate() + 60);
+    date.setDate(date.getDate() + 35);
 
     // Créez un objet DateFormatter pour formater la date
     let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
@@ -152,7 +168,23 @@ function add2Months(dateString) {
     // Obtenez la nouvelle date formatée
     let newDateString = dateFormatter.format(date);
 
-    return newDateString; // Retourne la nouvelle date formatée
+    return premierJourDuMois(newDateString); // Retourne la nouvelle date formatée
+}
+
+function sub1Month(dateString) {
+    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
+    let date = new Date(dateString);
+
+    // Ajoutez 60 jours à la date
+    date.setDate(date.getDate() - 28);
+
+    // Créez un objet DateFormatter pour formater la date
+    let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+
+    // Obtenez la nouvelle date formatée
+    let newDateString = dateFormatter.format(date);
+
+    return premierJourDuMois(newDateString); // Retourne la nouvelle date formatée
 }
 
 function premierJourDuMois(dateString) {

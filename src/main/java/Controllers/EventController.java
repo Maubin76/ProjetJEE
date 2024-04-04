@@ -124,7 +124,30 @@ public class EventController {
             e.printStackTrace();
         }
         java.sql.Date nextMonthDate = addDays(sqlDate, 30);
-        return getEventsOfTheMonth(nextMonthDate);
+        return getEventsOfTheMonth(sqlDate);
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/MoisPrecedent")
+    public String MoisPrecedent(@QueryParam("dateString") String dateString) {
+        java.sql.Date sqlDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        try {
+            // Parsing de la chaîne en java.util.Date
+            java.util.Date parsedDate = dateFormat.parse(dateString);
+
+            // Conversion de java.util.Date en java.sql.Date
+            sqlDate = new java.sql.Date(parsedDate.getTime());
+
+            // Affichage de la date SQL
+            System.out.println("Date SQL : " + sqlDate);
+        } catch (ParseException e) {
+            // Gestion des erreurs de parsing
+            e.printStackTrace();
+        }
+        java.sql.Date nextMonthDate = addDays(sqlDate, 30);
+        return getEventsOfTheMonth(sqlDate);
     }
 }
 
