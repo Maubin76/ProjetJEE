@@ -8,6 +8,8 @@ import com.google.gson.GsonBuilder;
 import java.io.IOException;
 import java.sql.Date;
 import java.sql.Time;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.time.LocalTime;
 
 import Models.Event;
@@ -30,6 +32,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
+import jakarta.ws.rs.QueryParam;
 import jakarta.ws.rs.core.Context;
 import jakarta.ws.rs.core.MediaType;
 
@@ -69,19 +72,22 @@ public class EventController {
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getEvents() {
-        Date dateMin = new Date(System.currentTimeMillis()); // Date d'aujourd'hui
-        Date dateMax = addDays(dateMin, 30); // Date dans 30 jours
-        List<Event> eventList = new ArrayList<>();
-        List<EventJSON> eventListJSON = new ArrayList<>();
-        eventList = eventDao.eventListBetweenDates(dateMin, dateMax); // Récupération des événements entre les dates spécifiées
-        // Conversion des événements en format JSON
-        for (Event event : eventList) {
-            eventListJSON.add(new EventJSON(event.getNom(), event.getDj().getNomDeScene(), event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
-        }
-        GsonBuilder builder = new GsonBuilder();
-        Gson gson = builder.create();
-        String json = gson.toJson(eventListJSON); // Conversion en JSON
-        return json;
+    	Date dateMin = new Date(System.currentTimeMillis()); // Date d'aujourd'hui
+		return getEventsOfTheMonth(dateMin);
+    }
+    
+    public String getEventsOfTheMonth(Date dateMin) {
+    	Date dateMax = addDays(dateMin, 30);
+		List<Event> eventList = new ArrayList<>();
+		List<EventJSON> eventListJSON=new ArrayList<>();
+		eventList = eventDao.eventListBetweenDates(dateMin,dateMax);
+		for(Event event:eventList) {
+			eventListJSON.add(new EventJSON(event.getNom(), event.getDj().getNomDeScene(),event.getLieu().getNomLieu(),event.getDate(),event.getHoraireDebut(),event.getHoraireFin()));
+		}
+    	GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json=gson.toJson(eventListJSON);
+		return json;
     }
 
     // Endpoint pour ajouter un DJ à un événement
@@ -96,6 +102,29 @@ public class EventController {
         if (dj != null && evenement != null && djAssigne == null) {
             eventDao.addDjtoEvent(dj, evenement); // Ajout du DJ à l'événement dans la base de données
         }
+    }
+    
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/MoisSuivant")
+    public String MoisSuivant(@QueryParam("dateString") String dateString) {
+        java.sql.Date sqlDate = new Date(System.currentTimeMillis());
+        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
+        try {
+            // Parsing de la chaîne en java.util.Date
+            java.util.Date parsedDate = dateFormat.parse(dateString);
+
+            // Conversion de java.util.Date en java.sql.Date
+            sqlDate = new java.sql.Date(parsedDate.getTime());
+
+            // Affichage de la date SQL
+            System.out.println("Date SQL : " + sqlDate);
+        } catch (ParseException e) {
+            // Gestion des erreurs de parsing
+            e.printStackTrace();
+        }
+        java.sql.Date nextMonthDate = addDays(sqlDate, 30);
+        return getEventsOfTheMonth(nextMonthDate);
     }
 }
 

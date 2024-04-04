@@ -41,6 +41,39 @@ function loadEvents() {
 	.catch(error => alert("Erreur : " + error)); // Gestion des erreurs
 }
 
+let moisAffiche;
+
+function moisSuivant(){
+	console.log(moisAffiche);
+	var url = "/ProjetJEE/api/event-management/MoisSuivant?dateString="+moisAffiche;
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			method:"GET"
+	};
+	
+	fetch(url, HTTPrequest)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
+function moisPrecedent(){
+	var url = "/ProjetJEE/api/event-management/MoisPrecedent";
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			method:"GET"
+	};
+	
+	fetch(url, HTTPrequest)
+	.then(response => response.json())
+	.then(response => process(response))
+	.catch(error => alert("Erreur : " + error));
+}
+
 // Fonction pour traiter les événements récupérés
 function process(events) {
     var eventlist = document.getElementById("eventlist");
@@ -64,6 +97,15 @@ function process(events) {
                        "<th class='column-header'>Horaire de fin</th>";
     thead.appendChild(trHead);
     table.appendChild(thead);
+    
+    if (events.length==0){
+    	console.log("Aucun event affiché");
+    	moisAffiche = premierJourDuMois(add2Months(moisAffiche));
+    	console.log("Date mise à jour : " + moisAffiche);
+    }
+    else {
+    	moisAffiche = premierJourDuMois(events[0].date);
+    }
     // Parcours des événements pour les afficher dans le tableau
     for (var event of events) {
         var tr = document.createElement("tr");
@@ -96,6 +138,37 @@ function process(events) {
         table.appendChild(tr);
     }
 }
+
+function add2Months(dateString) {
+    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
+    let date = new Date(dateString);
+
+    // Ajoutez 60 jours à la date
+    date.setDate(date.getDate() + 60);
+
+    // Créez un objet DateFormatter pour formater la date
+    let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+
+    // Obtenez la nouvelle date formatée
+    let newDateString = dateFormatter.format(date);
+
+    return newDateString; // Retourne la nouvelle date formatée
+}
+
+function premierJourDuMois(dateString) {
+    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
+    let date = new Date(dateString);
+
+    // Mettre le jour de la date à 1
+    date.setDate(1);
+
+    // Formater la nouvelle date
+    let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
+    let premierJourDateString = dateFormatter.format(date);
+
+    return premierJourDateString;
+}
+
 </script>
 </head>
 
@@ -123,6 +196,9 @@ function process(events) {
     </table>
 <!-- Div pour afficher les événements récupérés -->
 <div id="eventlist"></div>
+<!-- Boutons suivants et précédents -->
+  <button onclick="moisPrecedent()">Précédent</button>
+  <button onclick="moisSuivant()">Suivant</button>
 <h2>Assigner un dj à un evenement</h2>
 <!-- Formulaire qui envoie les informations pour assigner un DJ à un événement via une requête -->
 <form action="/ProjetJEE/api/event-management/ajoute" method="post">
