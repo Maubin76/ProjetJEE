@@ -71,6 +71,7 @@ public class EventDAOImpl extends EventDAO {
 				Time horaireDebut = rs.getTime("horaireDebut");
 				Time horaireFin = rs.getTime("horaireFin");
 				ClubDAO clubdao = new ClubDAOImpl();
+				// On crée un ClubDAO pour aller chercher le club via le nom
 				Lieu lieu = clubdao.findByName(lieuNom);
 				// On crée un DJDAO pour aller chercher le DJ via son id
 				DJDAO djdao = new DJDAOImpl();
@@ -79,7 +80,6 @@ public class EventDAOImpl extends EventDAO {
 					Event event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
 					resultList.add(event);
 				}
-				// On crée un ClubDAO pour aller chercher le club via le nom
 				else {
 					Event event = new Event(nom, null, lieu, date, horaireDebut, horaireFin);
 					resultList.add(event);
@@ -372,7 +372,12 @@ public class EventDAOImpl extends EventDAO {
 
         ResultSet rs = null;
         try {
-            rs = statement.executeQuery("SELECT * FROM Events WHERE dj = '" + dj.getId().toString() + "'");
+        	if (dj!=null) {
+                rs = statement.executeQuery("SELECT * FROM Events WHERE dj = '" + dj.getId().toString() + "'");
+        	}else {
+                rs = statement.executeQuery("SELECT * FROM Events WHERE dj is null");
+
+        	}
         } catch (SQLException e) {
             // TODO Auto-generated catch block
             e.printStackTrace();
@@ -405,4 +410,6 @@ public class EventDAOImpl extends EventDAO {
         }
         return resultList;
     }
+	
+	
 }
