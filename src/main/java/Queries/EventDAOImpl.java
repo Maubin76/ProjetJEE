@@ -278,10 +278,14 @@ public class EventDAOImpl extends EventDAO {
 				Date date = rs.getDate("date");
 				Time horaireDebut = rs.getTime("horaireDebut");
 				Time horaireFin = rs.getTime("horaireFin");
-				
+				DJ dj;
 				// On crée un DJDAO pour aller chercher le DJ via son id
 				DJDAO djdao = new DJDAOImpl();
-				DJ dj = djdao.findByID(UUID.fromString(djID));
+				if (djID!=null) {
+					dj = djdao.findByID(UUID.fromString(djID));
+				}else {
+					dj=null;
+				}
 				// On crée un ClubDAO pour aller chercher le club via le nom
 				ClubDAO clubdao = new ClubDAOImpl();
 				Lieu lieu = clubdao.findByName(lieuNom);
