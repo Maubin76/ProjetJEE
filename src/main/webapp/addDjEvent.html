@@ -1,0 +1,143 @@
+<html xmlns:mso="urn:schemas-microsoft-com:office:office" xmlns:msdt="uuid:C2F41010-65B3-11d1-A29F-00AA00C14882">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1" />
+<!-- lien avec la (les) page(s) de style. Suivez le chemin relatif pour -->
+<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300italic,700,700italic">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/normalize/8.0.1/normalize.css">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.4.1/milligram.css">
+
+<style>
+table, th, td {
+  border: 1px solid;
+  padding:5px;
+}
+table {
+  border-collapse: collapse;
+}
+div {
+margin-top: 10px;}
+</style>
+<script charset="ISO-8859-1">
+
+
+// Variable pour stocker le nom de scène du DJ
+var listeEvents=[];
+
+//Fonction pour charger les événements depuis une API
+function loadEvents(url) {
+	// Configuration de la requête HTTP
+	var HTTPrequest = {
+			headers:{
+				"content-type":"application/json;"
+			},
+			method:"GET"
+	};
+	
+	// Envoi de la requête fetch pour récupérer les événements
+	fetch(url, HTTPrequest)
+	.then(response => response.json())
+	.then(response => process(response)) // Appel de la fonction de traitement
+	.catch(error => alert("Erreur : " + error)); // Gestion des erreurs
+}
+
+// Fonction pour traiter les événements récupérés
+function process(events) {
+    var eventlist = document.getElementById("eventlist");
+
+    // Suppression des enfants de la liste des événements s'il y en a
+    if (eventlist.hasChildNodes()) {
+        eventlist.removeChild(eventlist.firstChild);
+    }
+
+    // Création d'un tableau pour afficher les événements
+    var table = document.createElement("table");
+    eventlist.appendChild(table);
+    var thead = document.createElement("thead");
+    var trHead = document.createElement("tr");
+    // Ajout des en-têtes de colonne
+    trHead.innerHTML = "<th class='column-header'>Nom</th>" +
+    				   "<th class='column-header'>DJ</th>" +
+                       "<th class='column-header'>Lieu</th>" +
+                       "<th class='column-header'>Date</th>" +
+                       "<th class='column-header'>Horaire de début</th>" +
+                       "<th class='column-header'>Horaire de fin</th>";
+    thead.appendChild(trHead);
+    table.appendChild(thead);
+    // Parcours des événements pour les afficher dans le tableau
+    for (var event of events) {
+        var tr = document.createElement("tr");
+        var td_nom = document.createElement("td");
+        td_nom.textContent = event.nom;
+        var td_dj = document.createElement("td");
+        td_dj.textContent = event.nomDJ;
+        var td_lieu = document.createElement("td");
+        td_lieu.textContent = event.nomLieu;
+        var td_date = document.createElement("td");
+        td_date.textContent = event.date;
+        var td_horaireDebut = document.createElement("td");
+        td_horaireDebut.textContent = event.horaireDebut;
+        var td_horaireFin = document.createElement("td");
+        td_horaireFin.textContent = event.horaireFin;
+		
+        // Ajout des cellules de données à la ligne du tableau
+        tr.appendChild(td_nom);
+        tr.appendChild(td_dj);
+        tr.appendChild(td_lieu);
+        tr.appendChild(td_date);
+        tr.appendChild(td_horaireDebut);
+        tr.appendChild(td_horaireFin);
+
+        // Création du formulaire pour chaque événement (à compléter)
+        var td_action = document.createElement("td");
+        var form = document.createElement("form");
+        
+
+        table.appendChild(tr);
+    }
+}
+
+// Fonction pour rechercher un DJ par son nom de scène
+function searchByName() {
+	var name = document.getElementById("input_name").value;
+	var url = '/ProjetJEE/api/event-management/eventDispo?name=' + encodeURIComponent(name);
+	loadEvents(url);
+}
+
+
+</script>
+<title>Modification DJs</title>
+</head>
+<body>
+<center>
+<!-- Titre principal et boutons de navigation -->
+<h1>Assignation d'un DJ à un event</h1>
+<a href="index.html">
+        <button>DJ</button>
+</a>
+<a href="event.html">
+        <button>Prochains events</button>
+</a>
+<a href="club.html">
+        <button>Clubs</button>
+</a>
+</center></br>
+<div class="main-container-jee" style="margin:2%;">
+<!-- Champ de recherche par nom de scène -->
+<input type="text" id="input_name">
+<!-- Bouton de recherche -->
+<button onclick="searchByName()">Rechercher un DJ avec son nom de scene</button>
+<!-- Titre pour la liste des DJs correspondants -->
+<h1>Events où le DJ peut s'inscrire</h1>
+<div id="djlist"></div>   
+<br> 
+<!-- Formulaire qui envoie les informations pour assigner un DJ à un événement via une requête -->
+<form id="modifyForm" action="/ProjetJEE/api/event-management/ajoutDjEvent" method="post">
+<div>Nom de scène du DJ à inscire</div>
+<input type="text" id="nomDeSceneDJ" name="nomDeSceneDJ" readonly required>             
+<div>Evenement : <input type="text" id="evenement" name="evenement"></div>
+<input type="submit" value="Assigner le DJ à cet event">
+
+</form>
+ </div>
+</body>
+</html>

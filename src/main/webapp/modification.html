@@ -92,7 +92,6 @@ function process(djs) {
 // Fonction pour rechercher un DJ par son nom de scène
 function searchByName() {
 	var name = document.getElementById("input_name").value;
-	console.log(name);
 	var url = '/ProjetJEE/api/dj-management?name=' + encodeURIComponent(name);
 	loadDJs(url);
 }
@@ -131,18 +130,6 @@ function verifieChamp() {
             break;
     }
 }
-document.addEventListener("DOMContentLoaded", function() {
-    document.getElementById("formSuppression").addEventListener("submit", function(event) {
-        // Empêcher l'action par défaut du formulaire (soumission)
-        event.preventDefault();
-
-        // Afficher une pop-up de confirmation
-        if (confirm("Voulez-vous vraiment supprimer ce DJ ?")) {
-            // Si l'utilisateur clique sur "OK", soumettre le formulaire
-            this.submit()
-        }
-    });
-});
 </script>
 <title>Modification DJs</title>
 </head>
@@ -200,7 +187,7 @@ document.addEventListener("DOMContentLoaded", function() {
 </form>
 
 <!-- Formulaire pour supprimer un DJ -->
-<form id="formSuppression" action="/ProjetJEE/api/dj-management/supprimer" method="post">
+<form action="/ProjetJEE/api/dj-management/supprimer" method="post">
 <input type="hidden" id="nomDeSceneDJSupprimer" name="nomDeSceneDJSupprimer" readonly required>
 <!-- Bouton pour soumettre la suppression -->
 <input type="submit" value="Supprimer ce DJ">     
