@@ -302,9 +302,34 @@ public class EventDAOImpl extends EventDAO {
 	}
 	
 	public static void main(String[] args) {
-		/*
+		
 		afficherEvent();
 		
+		System.out.println("-------------------");
+		
+		DJDAO djdao = new DJDAOImpl();
+		
+		List<DJ> listeDJ = djdao.findByAll();
+		DJ dj1 = listeDJ.get(0);
+		
+		EventDAO dao = new EventDAOImpl();
+		
+		List<Event> liste = dao.findByDJ(dj1);
+		for(int i=0; i<liste.size(); i++) {
+			String nom = liste.get(i).getNom();
+			String dj = liste.get(i).getDj().getNom().toString();
+			String lieu = liste.get(i).getLieu().getNomLieu();
+			String date = liste.get(i).getDate().toString();
+			String horaireDebut = liste.get(i).getHoraireDebut().toString();
+			String horaireFin = liste.get(i).getHoraireFin().toString();
+			
+			String djString = (i+1) + " " + nom + " " + dj + " " + lieu + " " + date + " " + 
+					horaireDebut + " " + horaireFin;
+			System.out.println(djString);
+		}
+		
+		/*
+		 
 		DJDAO djdao = new DJDAOImpl();
 		
 		List<DJ> listeDJ = djdao.findByAll();
@@ -312,27 +337,91 @@ public class EventDAOImpl extends EventDAO {
 		DJ dj2 = listeDJ.get(1);
 		DJ dj3 = listeDJ.get(2);
 		DJ dj4 = listeDJ.get(3);
+		DJ dj5 = listeDJ.get(4);
+
 		
 		ClubDAO clubdao = new ClubDAOImpl();
 		
 		List<Lieu> listeClubs = clubdao.findByAll();
-		Lieu lieu5 = listeClubs.get(4);
+		Lieu lieu1 = listeClubs.get(4);
+		Lieu lieu2 = listeClubs.get(5);
+		Lieu lieu3 = listeClubs.get(6);
+		Lieu lieu4 = listeClubs.get(7);
+		Lieu lieu5 = listeClubs.get(8);
+		Lieu lieu6 = listeClubs.get(9);
+		Lieu lieu7 = listeClubs.get(1);
+		Lieu lieu8 = listeClubs.get(2);
+		Lieu lieu9 = listeClubs.get(3);
 		
-		Date date5 = Date.valueOf(LocalDate.now().plusDays(20));
+		Date date6 = Date.valueOf(LocalDate.now().plusDays(80));
+		Date date7 = Date.valueOf(LocalDate.now().plusDays(90));
+		Date date8 = Date.valueOf(LocalDate.now().plusDays(120));
+		Date date9 = Date.valueOf(LocalDate.now().plusDays(130));
+		Date date10 = Date.valueOf(LocalDate.now().plusDays(115));
+		Date date11 = Date.valueOf(LocalDate.now().plusDays(93));
+		Date date12 = Date.valueOf(LocalDate.now().plusDays(162));
+		Date date13 = Date.valueOf(LocalDate.now().plusDays(142));
+		Date date14 = Date.valueOf(LocalDate.now().minusDays(25));
+		Date date15 = Date.valueOf(LocalDate.now().minusDays(36));
+		Date date16 = Date.valueOf(LocalDate.now().minusDays(42));
+		Date date17 = Date.valueOf(LocalDate.now().minusDays(64));
 		
-		Time horaireDebut5 = Time.valueOf(LocalTime.of(16, 0));
+		Time horaireDebut6 = Time.valueOf(LocalTime.of(16, 30));
+		Time horaireDebut7 = Time.valueOf(LocalTime.of(17, 0));
+		Time horaireDebut8 = Time.valueOf(LocalTime.of(14, 0));
+		Time horaireDebut9 = Time.valueOf(LocalTime.of(13, 30));
+		Time horaireDebut10 = Time.valueOf(LocalTime.of(8, 0));
+		Time horaireDebut11 = Time.valueOf(LocalTime.of(16, 30));
+		Time horaireDebut12 = Time.valueOf(LocalTime.of(20, 0));
+		Time horaireDebut13 = Time.valueOf(LocalTime.of(20, 30));
+		Time horaireDebut14 = Time.valueOf(LocalTime.of(20, 0));
+		Time horaireDebut15 = Time.valueOf(LocalTime.of(19, 30));
+		Time horaireDebut16 = Time.valueOf(LocalTime.of(14, 0));
+		Time horaireDebut17 = Time.valueOf(LocalTime.of(15, 30));
 		
-		Time horaireFin5 = Time.valueOf(LocalTime.of(23, 0));
+		Time horaireFin6 = Time.valueOf(LocalTime.of(23, 0));
+		Time horaireFin7 = Time.valueOf(LocalTime.of(0, 30));
+		Time horaireFin8 = Time.valueOf(LocalTime.of(22, 0));
+		Time horaireFin9 = Time.valueOf(LocalTime.of(1, 30));
+		Time horaireFin10 = Time.valueOf(LocalTime.of(23, 0));
+		Time horaireFin11 = Time.valueOf(LocalTime.of(4, 30));
+		Time horaireFin12 = Time.valueOf(LocalTime.of(2, 0));
+		Time horaireFin13 = Time.valueOf(LocalTime.of(22, 30));
+		Time horaireFin14 = Time.valueOf(LocalTime.of(4, 0));
+		Time horaireFin15 = Time.valueOf(LocalTime.of(22, 0));
+		Time horaireFin16 = Time.valueOf(LocalTime.of(23, 30));
+		Time horaireFin17 = Time.valueOf(LocalTime.of(21, 30));
 		
-		Event event5 = new Event("Event6" , null, lieu5, date5, horaireDebut5, horaireFin5);
+		Event event7 = new Event("Event7" , dj2, lieu2, date7, horaireDebut7, horaireFin7);
+		Event event8 = new Event("Event8" , dj3, lieu3, date8, horaireDebut8, horaireFin8);
+		Event event9 = new Event("Event9" , dj4, lieu4, date9, horaireDebut9, horaireFin9);
+		Event event10 = new Event("Event10" , dj5, lieu5, date10, horaireDebut10, horaireFin10);
+		Event event11 = new Event("Event11" , dj3, lieu6, date11, horaireDebut11, horaireFin11);
+		Event event12 = new Event("Event12" , dj2, lieu7, date12, horaireDebut12, horaireFin12);
+		Event event13 = new Event("Event13" , dj3, lieu8, date13, horaireDebut13, horaireFin13);
+		Event event14 = new Event("Event14" , dj1, lieu9, date14, horaireDebut14, horaireFin14);
+		Event event15 = new Event("Event15" , dj4, lieu2, date15, horaireDebut15, horaireFin15);
+		Event event16 = new Event("Event16" , dj1, lieu3, date16, horaireDebut16, horaireFin16);
+		Event event17 = new Event("Event17" , dj3, lieu4, date17, horaireDebut17, horaireFin17);
+
 		
 		EventDAO eventDAO = new EventDAOImpl();
 		
-		eventDAO.insertEventtoDB(event5);
+		eventDAO.insertEventtoDB(event7);
+		eventDAO.insertEventtoDB(event8);
+		eventDAO.insertEventtoDB(event9);
+		eventDAO.insertEventtoDB(event10);
+		eventDAO.insertEventtoDB(event11);
+		eventDAO.insertEventtoDB(event12);
+		eventDAO.insertEventtoDB(event13);
+		eventDAO.insertEventtoDB(event14);
+		eventDAO.insertEventtoDB(event15);
+		eventDAO.insertEventtoDB(event16);
+		eventDAO.insertEventtoDB(event17);
 		
+		afficherEvent();
 		
-		
-		afficherEvent();*/
+		*/
 		
 	}
 	
