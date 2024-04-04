@@ -81,10 +81,10 @@ public class EventController {
     
     // Fonction qui récupère les événements au format JSON
     private String getEventsOfTheMonth(Date dateMin) {
-    	Date dateMax = addDays(dateMin, 30);
+    	Date dateMax = addDays(dateMin, 30); // Durée dateMin-dateMax de 1 mois
 		List<Event> eventList = new ArrayList<>();
-		List<EventJSON> eventListJSON=new ArrayList<>();
-		eventList = eventDao.eventListBetweenDates(dateMin,dateMax);
+		List<EventJSON> eventListJSON=new ArrayList<>(); // Liste qui va accueillir les events à afficher
+		eventList = eventDao.eventListBetweenDates(dateMin,dateMax); // Récupération des events dans une liste
 		for (Event event : eventList) {
         	if(event.getDj()==null) {
         		eventListJSON.add(new EventJSON(event.getNom(), "Pas de DJ pour cet event", event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
@@ -146,14 +146,15 @@ public class EventController {
     		@FormParam("heureFin") String heureFin) {
     	
     	
-    	Lieu lieu = clubDao.findByName(nomLieu);
-    	
+    	Lieu lieu = clubDao.findByName(nomLieu); // Récupération des lieux de la base
+    	// Format de la date
     	SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd");
         Date dateEvenement = null;
         Time heureDebutObjet = null;
         Time heureFinObjet = null;
 
         try {
+        	// Conversions entre sql.date et util.date
             java.util.Date utilDate = dateFormat.parse(dateEvent);
             java.sql.Date sqlDate = new java.sql.Date(utilDate.getTime());
             dateEvenement = sqlDate;
@@ -170,8 +171,8 @@ public class EventController {
            } catch (ParseException e) {
             e.printStackTrace();
         }
-        Event event = new Event(nomEvent, null,lieu,dateEvenement,heureDebutObjet,heureFinObjet);
-        eventDao.insertEventtoDB(event);
+        Event event = new Event(nomEvent, null,lieu,dateEvenement,heureDebutObjet,heureFinObjet); // Instanciation de l'event
+        eventDao.insertEventtoDB(event); // Ajout dans la base
     }
     
     @GET
@@ -181,9 +182,9 @@ public class EventController {
     	// On récupère le dj dans la base de données
     	DJ dj =djDao.findByNomDeScene(nom).get(0);
     	// On récupère la liste de tous les events sans DJ et de tous les events assigné au dj recherché
-    	List<Event> eventPossible=new ArrayList<>();
-    	List<Event> eventLibre = new ArrayList<>();
-		eventLibre = eventDao.findByDJ(null);
+    	List<Event> eventPossible=new ArrayList<>();// Liste qui accueillera les events où le DJ choisi peut s'assigner
+    	List<Event> eventLibre = new ArrayList<>(); // Liste qui accueillera les events pour lesquels aucun DJ n'est assigné
+		eventLibre = eventDao.findByDJ(null); // Récupération des events sans DJ
 		List<Event> eventDJ = new ArrayList<>();
 		eventDJ=eventDao.findByDJ(dj);
 		List<EventJSON> eventListJSON=new ArrayList<>();
@@ -192,22 +193,23 @@ public class EventController {
 			//Pour chaque event possible on vérifie que cela correspond bien avec les contraintes de temps
 			for (Event eventsDJ : eventDJ) {
 				if (eventsDJ.getLieu().getContinent().equals(eventsLibre.getLieu().getContinent())) {
-					if(addDays(eventsDJ.getDate(),2).compareTo(eventsLibre.getDate())>0) {
+					if(addDays(eventsDJ.getDate(),2).compareTo(eventsLibre.getDate())>0) { // Contrainte de déplacement sur le même continent (2jours)
 						disponible=false;
 					}
 					
 				}else {
-					if(addDays(eventsDJ.getDate(),3).compareTo(eventsLibre.getDate())>0) {
+					if(addDays(eventsDJ.getDate(),3).compareTo(eventsLibre.getDate())>0) { // Contrainte de déplacement sur un continent différent (3jours)
 						disponible=false;
 					}
 				}
 			}
 			if(disponible) {
-				eventPossible.add(eventsLibre);
+				eventPossible.add(eventsLibre); // Ajout à la liste des event auxquels le DJ peut être assigné
 			}
 		}
 		// On ajoute ensuite tous les events possible dans un format pour le json
 		for (Event event : eventPossible) {
+			// Gestion de l'affichage des events assignables
         	if(event.getDj()==null) {
         		eventListJSON.add(new EventJSON(event.getNom(), "Pas de DJ pour cet event", event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
         	}else {
@@ -217,8 +219,8 @@ public class EventController {
 		GsonBuilder builder = new GsonBuilder();
 		Gson gson = builder.create();
 		String json=gson.toJson(eventListJSON);
-		// On retourne le json
-		return json;
+		// On retourne le json à la vue
+		return json; 
 
     }
 
