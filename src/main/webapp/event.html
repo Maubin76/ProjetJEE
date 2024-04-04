@@ -23,7 +23,7 @@ margin-top: 10px;}
     <title>Event</title>
 
 <script>
-// Fonction pour charger les événements depuis une API
+// Fonction pour charger les événements depuis une API. Utilisée au chargement de la page
 function loadEvents() {
 	var url = "/ProjetJEE/api/event-management";
 	// Configuration de la requête HTTP
@@ -44,11 +44,13 @@ function loadEvents() {
 let moisAffiche = null;
 let lastRecherche = "suivant";
 
+//Fonction déclenchée à l'appui du bouton 
+//permet d'afficher la liste des events planifiés au mois suivant celui actuellement affiché
 function moisSuivant(){
 	lastRecherche = "suivant";
 	moisAffiche = add1Month(moisAffiche);
 	console.log(moisAffiche);
-	var url = "/ProjetJEE/api/event-management/MoisSuivant?dateString="+moisAffiche;
+	var url = "/ProjetJEE/api/event-management/ShowEvents?dateString="+moisAffiche;
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
@@ -62,11 +64,13 @@ function moisSuivant(){
 	.catch(error => alert("Erreur : " + error));
 }
 
+// Fonction déclenchée à l'appui du bouton 
+// permet d'afficher la liste des events planifiés au mois précédent celui actuellement affiché
 function moisPrecedent(){
 	lastRecherche = "precedent"
 	moisAffiche = sub1Month(moisAffiche);
 	console.log(moisAffiche);
-	var url = "/ProjetJEE/api/event-management/MoisPrecedent?dateString="+moisAffiche;
+	var url = "/ProjetJEE/api/event-management/ShowEvents?dateString="+moisAffiche;
 	var HTTPrequest = {
 			headers:{
 				"content-type":"application/json;"
@@ -108,20 +112,7 @@ function process(events) {
     	moisAffiche = premierJourDuMois(events[0].date);
     	console.log(moisAffiche);
     }
-    
-    //if (events.length==0){
-    //	console.log("Aucun event affiché");
-    //	if (lastRecherche == "suivant"){
-    //		moisAffiche = premierJourDuMois(add2Months(moisAffiche));
-    //	}
-    //	else {
-    //		moisAffiche = premierJourDuMois(sub1Month(moisAffiche));
-    //	}
-    //	console.log("Date mise à jour : " + moisAffiche);
-    //}
-    //else {
-    //	moisAffiche = premierJourDuMois(events[0].date);
-    //}
+
     // Parcours des événements pour les afficher dans le tableau
     for (var event of events) {
         var tr = document.createElement("tr");
@@ -155,49 +146,31 @@ function process(events) {
     }
 }
 
+// Foncton pour ajouter un mois à une date au format de chaine de caractères
 function add1Month(dateString) {
-    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
-    let date = new Date(dateString);
-
-    // Ajoutez 60 jours à la date
-    date.setDate(date.getDate() + 35);
-
-    // Créez un objet DateFormatter pour formater la date
+    let date = new Date(dateString); // Objet de type Date
+    date.setDate(date.getDate() + 31); // Ajout d'un mois
+    // Création d'un objet DateFormatter pour formater la date
     let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-
-    // Obtenez la nouvelle date formatée
-    let newDateString = dateFormatter.format(date);
-
-    return premierJourDuMois(newDateString); // Retourne la nouvelle date formatée
+    let newDateString = dateFormatter.format(date);// Nouvelle date formatée
+    return premierJourDuMois(newDateString); // Nouvelle date formaté mise à jour au premier jour du mois
 }
 
+//Foncton pour retirer un mois à une date au format de chaine de caractères
 function sub1Month(dateString) {
-    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
     let date = new Date(dateString);
-
-    // Ajoutez 60 jours à la date
-    date.setDate(date.getDate() - 28);
-
-    // Créez un objet DateFormatter pour formater la date
+    date.setDate(date.getDate() - 31); // Retire un mois
     let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
-
-    // Obtenez la nouvelle date formatée
     let newDateString = dateFormatter.format(date);
-
-    return premierJourDuMois(newDateString); // Retourne la nouvelle date formatée
+    return premierJourDuMois(newDateString);
 }
 
+// Fonction qui permet de mettre une date (sous forme de string) au premier jour de son mois
 function premierJourDuMois(dateString) {
-    // Créez un objet Date en utilisant la chaîne de caractères passée en paramètre
     let date = new Date(dateString);
-
-    // Mettre le jour de la date à 1
-    date.setDate(1);
-
-    // Formater la nouvelle date
+    date.setDate(1);// Mettre le jour de la date à 1
     let dateFormatter = new Intl.DateTimeFormat('en-US', { month: 'short', day: '2-digit', year: 'numeric' });
     let premierJourDateString = dateFormatter.format(date);
-
     return premierJourDateString;
 }
 

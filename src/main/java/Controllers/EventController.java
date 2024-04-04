@@ -68,7 +68,7 @@ public class EventController {
         return new Date(addedMilliseconds);
     }
 
-    // Endpoint pour récupérer les événements au format JSON
+    // Endpoint d'affichage des events du mois actuel
     @GET
     @Produces(MediaType.APPLICATION_JSON)
     public String getEvents() {
@@ -76,7 +76,8 @@ public class EventController {
 		return getEventsOfTheMonth(dateMin);
     }
     
-    public String getEventsOfTheMonth(Date dateMin) {
+    // Fonction qui récupère les événements au format JSON
+    private String getEventsOfTheMonth(Date dateMin) {
     	Date dateMax = addDays(dateMin, 30);
 		List<Event> eventList = new ArrayList<>();
 		List<EventJSON> eventListJSON=new ArrayList<>();
@@ -104,10 +105,12 @@ public class EventController {
         }
     }
     
+    // Endpoint d'affichage des events d'un mois précis
+    // Le mois est celui de la date (String) placée en paramètre
     @GET
     @Produces(MediaType.APPLICATION_JSON)
-    @Path("/MoisSuivant")
-    public String MoisSuivant(@QueryParam("dateString") String dateString) {
+    @Path("/ShowEvents")
+    public String ShowEvents(@QueryParam("dateString") String dateString) {
         java.sql.Date sqlDate = new Date(System.currentTimeMillis());
         SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
         try {
@@ -123,30 +126,6 @@ public class EventController {
             // Gestion des erreurs de parsing
             e.printStackTrace();
         }
-        java.sql.Date nextMonthDate = addDays(sqlDate, 30);
-        return getEventsOfTheMonth(sqlDate);
-    }
-    
-    @GET
-    @Produces(MediaType.APPLICATION_JSON)
-    @Path("/MoisPrecedent")
-    public String MoisPrecedent(@QueryParam("dateString") String dateString) {
-        java.sql.Date sqlDate = new Date(System.currentTimeMillis());
-        SimpleDateFormat dateFormat = new SimpleDateFormat("MMM dd, yyyy");
-        try {
-            // Parsing de la chaîne en java.util.Date
-            java.util.Date parsedDate = dateFormat.parse(dateString);
-
-            // Conversion de java.util.Date en java.sql.Date
-            sqlDate = new java.sql.Date(parsedDate.getTime());
-
-            // Affichage de la date SQL
-            System.out.println("Date SQL : " + sqlDate);
-        } catch (ParseException e) {
-            // Gestion des erreurs de parsing
-            e.printStackTrace();
-        }
-        java.sql.Date nextMonthDate = addDays(sqlDate, 30);
         return getEventsOfTheMonth(sqlDate);
     }
 }
