@@ -124,7 +124,7 @@ public class EventController {
     @POST
     @Path("/ajoutDjEvent")
     @Consumes("application/x-www-form-urlencoded")
-    public void addDjs(@FormParam("evenement") String nomEvenement, @FormParam("dj") String nomSceneDJ) {
+    public void addDjs(@FormParam("evenement") String nomEvenement, @FormParam("nomDeSceneDJ") String nomSceneDJ) {
         DJ dj = djDao.findByNomDeScene(nomSceneDJ).get(0); // Récupération du DJ par son nom de scène
         Event evenement = eventDao.findByNom(nomEvenement).get(0); // Récupération de l'événement par son nom
         DJ djAssigne = evenement.getDj(); // Récupération du DJ déjà assigné à l'événement
@@ -176,13 +176,24 @@ public class EventController {
     @GET
     @Path("/eventDispo")
     @Produces(MediaType.APPLICATION_JSON)
-    public void getEventsDispo(@QueryParam("name") String nom) {
+    public String getEventsDispo(@QueryParam("name") String nom) {
     	DJ dj =djDao.findByNomDeScene(nom).get(0);
     	List<Event> eventLibre = new ArrayList<>();
 		eventLibre = eventDao.findByDJ(null);
 		List<Event> eventDJ = new ArrayList<>();
-		eventDJ=eventDao.findByDJ(nom);
-		
+		eventDJ=eventDao.findByDJ(dj);
+		List<EventJSON> eventListJSON=new ArrayList<>();
+		for (Event event : eventLibre) {
+        	if(event.getDj()==null) {
+        		eventListJSON.add(new EventJSON(event.getNom(), "Pas de DJ pour cet event", event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
+        	}else {
+        		eventListJSON.add(new EventJSON(event.getNom(), event.getDj().getNomDeScene(), event.getLieu().getNomLieu(), event.getDate(), event.getHoraireDebut(), event.getHoraireFin()));
+        	}
+        }
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json=gson.toJson(eventListJSON);
+		return json;
 
     }
 
