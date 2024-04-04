@@ -13,6 +13,7 @@ import jakarta.ws.rs.GET;
 import jakarta.ws.rs.Path;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
 
 // Définition du chemin de base pour toutes les méthodes dans cette classe
 @Path("/club-management")
@@ -30,4 +31,20 @@ public class ClubController {
         String json = gson.toJson(clubs); // Conversion de la liste des clubs en JSON
         return json; // Retourne la représentation JSON des clubs
     }
+    
+	@GET
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.TEXT_PLAIN)
+	public String getClubs(@QueryParam("name") String ville) {
+		List<Lieu> clubs;
+		if (ville!=null) {
+			clubs = clubDao.findByVille(ville);
+		}else {
+			clubs = null;
+		}
+		GsonBuilder builder = new GsonBuilder();
+		Gson gson = builder.create();
+		String json=gson.toJson(clubs);
+		return json;	
+	}
 }

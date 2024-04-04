@@ -103,6 +103,46 @@ public class ClubDAOImpl extends ClubDAO{
 		}
 		return resultList;
 	}
+
+	@Override
+	public List<Lieu> findByVille(String _ville) {
+		
+		List<Lieu> resultList = new ArrayList<Lieu>();
+		
+		Connection connection = DBManager.getInstance().getConnection();
+		
+		Statement statement = null;
+		try {
+			statement = connection.createStatement();
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		ResultSet rs = null;
+		try {
+			rs = statement.executeQuery("SELECT * FROM Clubs WHERE ville = '" + _ville + "'");
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		try {
+			while(rs.next()) {
+				String nom = rs.getString("nom");
+				String ville = rs.getString("ville");
+				String pays = rs.getString("pays");
+				String continent = rs.getString("continent");
+				
+				Lieu lieu = new Lieu(nom, ville, pays, continent);
+				
+				resultList.add(lieu);
+			}
+		} catch (SQLException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return resultList;
+	}
 	
 	@Override
 	public void insertClubtoDB(Lieu lieu) {
