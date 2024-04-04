@@ -354,5 +354,55 @@ public class EventDAOImpl extends EventDAO {
 			System.out.println(djString);
 		}
 	}
+	
+	@Override
+    public List<Event> findByDJ(DJ dj) {
 
+        List<Event> resultList = new ArrayList<Event>();
+
+        Connection connection = DBManager.getInstance().getConnection();
+
+        Statement statement = null;
+        try {
+            statement = connection.createStatement();
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+
+        ResultSet rs = null;
+        try {
+            rs = statement.executeQuery("SELECT * FROM Events WHERE dj = '" + dj.getId().toString() + "'");
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        try {
+            while(rs.next()) {
+                String nom = rs.getString("nom");
+                String djID = rs.getString("dj");
+                String lieuNom = rs.getString("lieu");
+                Date date = rs.getDate("date");
+                Time horaireDebut = rs.getTime("horaireDebut");
+                Time horaireFin = rs.getTime("horaireFin");
+                ClubDAO clubdao = new ClubDAOImpl();
+                Lieu lieu = clubdao.findByName(lieuNom);
+                // On crée un DJDAO pour aller chercher le DJ via son id
+                DJDAO djdao = new DJDAOImpl();
+                if (djID!=null) {
+                    Event event = new Event(nom, dj, lieu, date, horaireDebut, horaireFin);
+                    resultList.add(event);
+                }
+                // On crée un ClubDAO pour aller chercher le club via le nom
+                else {
+                    Event event = new Event(nom, null, lieu, date, horaireDebut, horaireFin);
+                    resultList.add(event);
+                }
+            }
+        } catch (SQLException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return resultList;
+    }
 }
